@@ -1,0 +1,3 @@
+<template>
+  Main.vue
+</template>

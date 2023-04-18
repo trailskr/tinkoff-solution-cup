@@ -1,10 +1,20 @@
 module.exports = {
   root: true,
   extends: [
-    '@nuxt/eslint-config',
+    'plugin:vue/vue3-recommended',
     '@vue/standard',
     '@vue/typescript/recommended'
   ],
+  env: {
+    node: true,
+    browser: true
+  },
+  globals: {
+    defineProps: 'readonly',
+    defineEmits: 'readonly',
+    defineExpose: 'readonly',
+    withDefaults: 'readonly'
+  },
   plugins: [
     'unused-imports',
     'prefer-arrow',
