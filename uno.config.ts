@@ -4,7 +4,7 @@ import {
   presetWebFonts
 } from 'unocss'
 
-import { screenBreakpoints } from './screenBreakpoints'
+import { screenBreakpoints } from './src/screenBreakpoints'
 import { parentNamedGroupStatusModifier } from './unocss-named-group-status'
 
 // eslint-disable-next-line import/no-default-export
