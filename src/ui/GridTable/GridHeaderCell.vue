@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { SortingDirection } from 'src/use/useSorting'
+  import { SortingDirection } from '@/use/useSorting'
 
   interface Props {
     direction?: SortingDirection | undefined

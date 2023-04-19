@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  import { themeColors } from 'src/themeColors'
-  import { AfterDropHandler, useDragAndDropHandlers } from 'src/use/useDragAndDropHandlers'
-  import { ChangeSortingFn, SortingItem, SortingsMap } from 'src/use/useSorting'
-  import { formatColor } from 'src/utils/color'
-  import { isFunction } from 'src/utils/typecheck'
-  import { noop } from 'src/utils/utils'
+  import { themeColors } from '@/themeColors'
+  import { AfterDropHandler, useDragAndDropHandlers } from '@/use/useDragAndDropHandlers'
+  import { ChangeSortingFn, SortingItem, SortingsMap } from '@/use/useSorting'
+  import { formatColor } from '@/utils/color'
+  import { isFunction } from '@/utils/typecheck'
+  import { noop } from '@/utils/utils'
 
   import { Column, ColumnDef, DataGridRow, DataGridRowKeyGetter, makeRowKeyGetter, mapToColumn } from './dataGrid'
 
@@ -50,7 +50,7 @@
     setSelected: noop,
     setSelectedAll: noop,
     onRowClick: noop,
-    rowBgColor: formatColor(themeColors.background, 'var(--un-bg-opacity)')
+    rowBgColor: formatColor(themeColors.mainbg, 'var(--un-bg-opacity)')
   })
 
   const hasAnySelection = computed(() => props.hasSelection || props.hasAllSelection)

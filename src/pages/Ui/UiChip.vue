@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const onChipClose = () => alert('chip close')
+  const onChipClose = (): void => alert('chip close')
 </script>
 
 <template>

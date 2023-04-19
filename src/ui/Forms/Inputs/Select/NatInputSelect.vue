@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { MaybeElement } from '@vueuse/core'
-  import { isArray, isFunction, isObject, isString } from 'src/utils/typecheck'
-  import { debounce, escapeRegExp, fullTextSearch, Group, groupBy } from 'src/utils/utils'
+
+  import { isArray, isFunction, isObject, isString } from '@/utils/typecheck'
+  import { debounce, escapeRegExp, fullTextSearch, Group, groupBy } from '@/utils/utils'
 
   import { IconGetter, NatInputSelectExpose, SelectedIndices } from './inputSelect'
 
@@ -112,7 +113,7 @@
     if (value.value.length <= props.maxItems) return value.value
     return value.value.slice(hiddenValues.value.length)
   })
-  const removeHiddenValues = () => {
+  const removeHiddenValues = (): void => {
     if (!isMultiple.value || !isMultipleValue(value.value)) return
     value.value.splice(0, hiddenValues.value.length)
   }
@@ -216,7 +217,7 @@
   const modelValueGetter = computed<ModelValueGetter>(() => {
     return props.keyAsModel
       ? objectKeyGetter.value as ModelValueGetter
-      : (data: ModelValueSingle) => data
+      : (data: ModelValueSingle): ModelValueSingle => data
   })
 
   const optionsMap = computed(() => {
@@ -258,7 +259,7 @@
   const showDropdown = ref(false)
   const cursorIndices = reactive<SelectedIndices>({})
 
-  const setCursorIndex = ({ groupIndex, optionIndex }: SelectedIndices) => {
+  const setCursorIndex = ({ groupIndex, optionIndex }: SelectedIndices): void => {
     cursorIndices.groupIndex = groupIndex
     cursorIndices.optionIndex = optionIndex
   }
@@ -292,11 +293,11 @@
     return { set, clear }
   })
 
-  const openDropdown = () => {
+  const openDropdown = (): void => {
     showDropdown.value = true
   }
 
-  const closeDropdown = () => {
+  const closeDropdown = (): void => {
     showDropdown.value = false
     debouncedSetQuery.value.clear()
   }
@@ -344,7 +345,7 @@
     page.value = 1
   })
 
-  const fetch = () => {
+  const fetch = (): void => {
     const fetchProp = props.fetch
     if (!fetchProp) return
     if (!showDropdown.value) return
@@ -376,7 +377,7 @@
   let isFocused = false
   let focusTimeout: number | undefined
 
-  const onFocus = () => {
+  const onFocus = (): void => {
     const inputEl = inputRef.value
     query.value = ''
     window.clearTimeout(focusTimeout)
@@ -391,13 +392,13 @@
     openDropdown()
   }
 
-  const resetValue = () => {
+  const resetValue = (): void => {
     input.value = ''
     query.value = ''
     value.value = isMultiple.value ? [] : undefined
   }
 
-  const reset = () => {
+  const reset = (): void => {
     cursorIndices.optionIndex = undefined
     cursorIndices.groupIndex = undefined
     closeDropdown()
@@ -407,7 +408,7 @@
     emit('reset')
   }
 
-  const focus = () => {
+  const focus = (): void => {
     inputRef.value?.focus()
     onFocus()
   }
@@ -416,11 +417,11 @@
   defineExpose(toExpose)
 
   const dropdownContent = ref<HTMLElement>()
-  const dropdownContentRef = (el: HTMLElement | undefined) => {
+  const dropdownContentRef = (el: HTMLElement | undefined): void => {
     dropdownContent.value = el
   }
 
-  const onInput = (e: Event) => {
+  const onInput = (e: Event): void => {
     const inputEl = e.target as HTMLInputElement
     input.value = inputEl.value
     debouncedSetQuery.value.set(input.value)
@@ -442,7 +443,14 @@
     }
   }
 
-  const findItemInModel = (option: ModelValue) => {
+  type FindItemInModelResult = {
+    index: number
+    found: Option
+  } | {
+    index?: undefined
+    found?: undefined
+  }
+  const findItemInModel = (option: ModelValue): FindItemInModelResult => {
     const valueArr = value.value as ModelValueMultiple
     const len = valueArr.length
     const v = keyGetter.value(option as ObjectOption)
@@ -454,7 +462,7 @@
     return {}
   }
 
-  const onBlur = (e?: Event) => {
+  const onBlur = (e?: Event): void => {
     isFocused = false
     if (e instanceof KeyboardEvent) {
       e.preventDefault()
@@ -478,7 +486,7 @@
     }
   }
 
-  const isSelected = (item: Option) => {
+  const isSelected = (item: Option): boolean => {
     if (!isMultiple.value) {
       const curValue = value.value as ModelValueSingle
       return curValue != null
@@ -504,14 +512,14 @@
         : true
   }
 
-  const isDisabledGroup = (group: Group<Option>) => {
+  const isDisabledGroup = (group: Group<Option>): boolean => {
     return group.items.every(disabledGetter.value)
   }
 
   /**
    * Value select handler, handle by enter and by mouse select, auto close options list
    */
-  const select = (isEnterPressed = false) => {
+  const select = (isEnterPressed = false): void => {
     if (isEnterPressed && props.tagging && input.value) {
       return selectByEnter()
     }
@@ -528,19 +536,19 @@
     }
   }
 
-  const selectByEnter = () => {
+  const selectByEnter = (): void => {
     value.value = [...value.value as ModelValueMultiple, input.value] as ModelValueMultiple
     input.value = ''
     query.value = input.value
   }
 
-  const getGroupToSelect = () => {
+  const getGroupToSelect = (): Group<Option, Key> | undefined => {
     return cursorIndices.groupIndex == null
       ? undefined
       : filteredOptionsGrouped.value[cursorIndices.groupIndex]
   }
 
-  const getOptionToSelect = (group?: Group<Option, Key>) => {
+  const getOptionToSelect = (group?: Group<Option, Key>): Option | undefined => {
     return cursorIndices.optionIndex == null
       ? undefined
       : group
@@ -548,7 +556,7 @@
         : filteredOptions.value[cursorIndices.optionIndex]
   }
 
-  const selectOption = (option: Option) => {
+  const selectOption = (option: Option): void => {
     if (disabledGetter.value(option)) return
     const selectedValue = modelValueGetter.value(option)
 
@@ -577,7 +585,7 @@
     emit('select', option)
   }
 
-  const selectGroup = (group: Group<Option, Key>) => {
+  const selectGroup = (group: Group<Option, Key>): void => {
     // can't select groups when not multiple
     if (isMultiple.value) {
       const selectedValues = group.items
@@ -613,7 +621,7 @@
     emit('select', group)
   }
 
-  const up = () => {
+  const up = (): void => {
     if (!showDropdown.value) {
       onFocus()
       return
@@ -658,7 +666,7 @@
       : cursorIndices.optionIndex - 1) // prev item
   }
 
-  const down = () => {
+  const down = (): void => {
     if (!showDropdown.value) {
       onFocus()
       return
@@ -702,12 +710,12 @@
       : Math.min(activeOptions.value.length - 1, cursorIndices.optionIndex + 1) // next item
   }
 
-  const removeItem = (index: number) => {
+  const removeItem = (index: number): void => {
     const valueArr = value.value as unknown[]
     valueArr.splice(index, 1)
   }
 
-  const removeLast = (e: Event) => {
+  const removeLast = (e: Event): void => {
     const valueArr = value.value as ModelValueMultiple
     if (valueArr && valueArr.length > 0 && input.value.length === 0) {
       const last = valueArr.pop()
@@ -763,6 +771,7 @@
       :disabled="disabled"
       :readonly="noManualInput"
       :style="{ textAlign: textAlign }"
+      :autocomplete="autocomplete ? 'chrome-off' : ''"
       @input="onInput"
       @click="onFocus()"
       @keydown.up.stop.prevent="up"
@@ -771,7 +780,6 @@
       @keydown.esc="onBlur"
       @keydown.delete.stop="removeLast"
       @blur="onBlur"
-      :autocomplete="autocomplete ? 'chrome-off' : ''"
     >
     <SelectControls
       v-if="!hideControls"

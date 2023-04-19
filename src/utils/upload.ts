@@ -1,7 +1,7 @@
 import { isFunction, isObjectLike } from './typecheck'
 import { QueryParameters, queryStringFromObject } from './utils'
 
-const isLikeJSON = (text: string) => {
+const isLikeJSON = (text: string): boolean => {
   return typeof text === 'string' && (text[0] === '[' || text[0] === '{')
 }
 
@@ -27,7 +27,7 @@ export interface UploadResponse<T = unknown> {
   status: XMLHttpRequest['status']
 }
 
-export const upload = <T>(url: string, item: UploadItem, params: UploadParams = {}) => new Promise<UploadResponse<T>>((resolve, reject) => {
+export const upload = <T>(url: string, item: UploadItem, params: UploadParams = {}): Promise<UploadResponse<T>> => new Promise<UploadResponse<T>>((resolve, reject) => {
   const { method = 'POST', query = {}, headers = {}, contentType = item.file.type ?? 'application/octet-stream', formData = {} } = params
   const xhr = new XMLHttpRequest()
 
@@ -43,6 +43,7 @@ export const upload = <T>(url: string, item: UploadItem, params: UploadParams = 
 
   xhr.addEventListener('load', () => {
     if (xhr.status < 200 || xhr.status >= 300) {
+      // eslint-disable-next-line prefer-promise-reject-errors
       return reject({
         data: xhr.response,
         status: xhr.status
@@ -63,6 +64,7 @@ export const upload = <T>(url: string, item: UploadItem, params: UploadParams = 
   })
 
   xhr.addEventListener('error', () => {
+    // eslint-disable-next-line prefer-promise-reject-errors
     reject({
       data: isLikeJSON(xhr.responseText) ? JSON.parse(xhr.responseText) : xhr.responseText,
       status: xhr.status

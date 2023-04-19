@@ -1,8 +1,7 @@
 import { MaybeRef } from '@vueuse/core'
-import { Ref } from 'vue'
-
 import { DropSection } from 'src/ui/DragAndDrop/dragAndDropManager'
 import { isFunction } from 'src/utils/typecheck'
+import { Ref } from 'vue'
 
 export interface AfterDropData<DragModel> {
   src: DragModel
@@ -33,8 +32,8 @@ export interface UseDragAndDropHandlersOptions<DragModel> {
 export const useDragAndDropHandlers = <DragModel>(itemsOrItemsGetter: Ref<DragModel[]> | ((model: DragModel) => DragModel[]), options: UseDragAndDropHandlersOptions<DragModel> = {}): UseDragAndDropHandlersResult<DragModel> => {
   const {
     isEnabled: maybeRefIsEnabled = true,
-    keyGetter = (model) => (model as any).id as number | string,
-    afterDrop = ({ src, srcIndex, trgIndex, srcItems, trgItems, isDroppedAfter }) => {
+    keyGetter = (model): string | number => (model as any).id as number | string,
+    afterDrop = ({ src, srcIndex, trgIndex, srcItems, trgItems, isDroppedAfter }): void => {
       if (srcItems === trgItems) {
         srcItems.splice(srcIndex, 1)
         if (srcIndex < trgIndex) trgIndex -= 1
@@ -47,7 +46,7 @@ export const useDragAndDropHandlers = <DragModel>(itemsOrItemsGetter: Ref<DragMo
     }
   } = options
 
-  const canDrop = (srcModel: DragModel, trgModel: DragModel, dropSection: DropSection) => {
+  const canDrop = (srcModel: DragModel, trgModel: DragModel, dropSection: DropSection): boolean => {
     const isEnabled = unref(maybeRefIsEnabled)
     if (!isEnabled) return false
     const [srcId, trgId] = [keyGetter(srcModel), keyGetter(trgModel)]
@@ -60,9 +59,9 @@ export const useDragAndDropHandlers = <DragModel>(itemsOrItemsGetter: Ref<DragMo
     return srcItems !== trgItems || srcIndex !== trgIndex + (dropSection.isAtBottom ? 1 : -1)
   }
 
-  const onDrop = (srcModel: DragModel, trgModel: DragModel, dropSection: DropSection) => {
+  const onDrop = (srcModel: DragModel, trgModel: DragModel, dropSection: DropSection): void => {
     const isEnabled = unref(maybeRefIsEnabled)
-    if (!isEnabled) return false
+    if (!isEnabled) return
     const [srcId, trgId] = [keyGetter(srcModel), keyGetter(trgModel)]
     const [srcItems, trgItems] = isFunction(itemsOrItemsGetter)
       ? [itemsOrItemsGetter(srcModel), itemsOrItemsGetter(trgModel)]

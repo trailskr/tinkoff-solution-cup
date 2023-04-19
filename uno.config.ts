@@ -1,7 +1,9 @@
 import {
   defineConfig,
   presetUno,
-  presetWebFonts
+  presetWebFonts,
+  transformerDirectives,
+  transformerVariantGroup
 } from 'unocss'
 
 import { screenBreakpoints } from './src/screenBreakpoints'
@@ -30,5 +32,9 @@ export default defineConfig({
         sans: 'Roboto'
       }
     })
+  ],
+  transformers: [
+    transformerDirectives(),
+    transformerVariantGroup()
   ]
 })

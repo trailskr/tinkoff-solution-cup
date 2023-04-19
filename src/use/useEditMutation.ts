@@ -1,8 +1,8 @@
 import type { MutationFunction, QueryKey } from 'react-query/types/core'
 import { useQueryClient, useMutation, UseMutationOptions, UseMutationReturnType } from 'vue-query'
 
-import { CallerOptions } from 'src/utils/createApi'
-import { isFunction } from 'src/utils/typecheck'
+import { CallerOptions } from '@/utils/createApi'
+import { isFunction } from '@/utils/typecheck'
 
 export type EditMutationFunctions<TResData, TReqData extends { id: number | string }> = {
   create: (data: TReqData, options?: CallerOptions | undefined) => Promise<TResData>
@@ -28,7 +28,7 @@ export const useEditMutation = <TResData, TReqData extends { id: number | string
 
   const mutationOptions = {
     ...options,
-    onSuccess: (data: TResData, variables: TReqData, context: TContext | undefined) => {
+    onSuccess: (data: TResData, variables: TReqData, context: TContext | undefined): void => {
       queryClient.invalidateQueries(invalidateQueryKey)
       if (queryKeyFn) queryClient.setQueriesData(queryKeyFn(data, variables, context), data)
       options?.onSuccess?.(data, variables, context)
@@ -50,7 +50,7 @@ export const useEditSingletonMutation = <TResData, TReqData, TError = unknown, T
 
   const mutationOptions = {
     ...options,
-    onSuccess: (data: TResData, variables: TReqData, context: TContext | undefined) => {
+    onSuccess: (data: TResData, variables: TReqData, context: TContext | undefined): void => {
       queryClient.invalidateQueries(invalidateQueryKey)
       if (queryKeyFn) queryClient.setQueriesData(queryKeyFn(data, variables, context), data)
       options?.onSuccess?.(data, variables, context)

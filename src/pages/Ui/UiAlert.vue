@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import NatAlert from 'src/ui/Alert/NatAlert.vue'
+  import NatAlert from '@/ui/Alert/NatAlert.vue'
 
   const isVisible = ref(true)
 
-  const show = () => {
+  const show = (): void => {
     isVisible.value = true
   }
 </script>

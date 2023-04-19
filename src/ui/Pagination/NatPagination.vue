@@ -87,7 +87,7 @@
     return Math.min(props.pager.lastPage, props.limit) >= 6
   })
 
-  const boundsCheck = () => {
+  const boundsCheck = (): void => {
     const limit = props.limit - 1
     if (leftPage.value + limit > props.pager.lastPage) {
       leftPage.value = props.pager.lastPage - limit
@@ -97,7 +97,7 @@
     }
   }
 
-  const setView = (view: PageView) => {
+  const setView = (view: PageView): void => {
     if (isPageViewFrom(view)) {
       leftPage.value = view.from - Number(showBounds.value) * 2
     } else {
@@ -106,7 +106,7 @@
     boundsCheck()
   }
 
-  const changePage = (page: PageValue) => {
+  const changePage = (page: PageValue): void => {
     if (typeof page === 'number') {
       if (props.pager.page !== page) {
         props.pager.update({ page })
@@ -117,7 +117,7 @@
     }
   }
 
-  const limitChanged = (limit: string) => {
+  const limitChanged = (limit: string): void => {
     props.pager.update({ limit: +limit })
     emit('change', props.pager)
   }

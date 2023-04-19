@@ -1,6 +1,6 @@
 import { InjectionKey, Ref, UnwrapRef } from 'vue'
 
-import { removeElementFromArray } from 'src/utils/utils'
+import { removeElementFromArray } from '@/utils/utils'
 
 export interface AbstractParent<Child> {
   addChild: (child: UnwrapRef<Child>) => void
@@ -25,10 +25,10 @@ export const createParentChild = <
     const children = ref<Child[]>([])
 
     const parent = {
-      addChild: (child: UnwrapRef<Child>) => {
+      addChild: (child: UnwrapRef<Child>): void => {
         children.value.push(child as any)
       },
-      removeChild: (child: UnwrapRef<Child>) => {
+      removeChild: (child: UnwrapRef<Child>): void => {
         removeElementFromArray(children.value, child as any)
       },
       ...parentMethods

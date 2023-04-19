@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useLocalVModel } from 'src/use/useLocalVModel'
+  import { useLocalVModel } from '@/use/useLocalVModel'
 
   import { getExpansionId, useExpansion, Semantics } from './expansion'
 
@@ -46,18 +46,18 @@
 
   const isOpen = useLocalVModel(props, 'modelValue', emit, { defaultValue: false })
 
-  const close = () => { isOpen.value = false }
+  const close = (): void => { isOpen.value = false }
 
   const expansion = { id: getExpansionId(), close }
 
-  const open = () => {
+  const open = (): void => {
     isOpen.value = true
     if (expansionGroup) expansionGroup.onOpen(expansion)
   }
 
   const expansionGroup = useExpansion(expansion)
 
-  const toggle = () => {
+  const toggle = (): void => {
     if (props.disabled) return
     if (isOpen.value) close()
     else open()

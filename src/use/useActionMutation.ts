@@ -1,7 +1,7 @@
 import type { MutationFunction, QueryKey } from 'react-query/types/core'
 import { useQueryClient, useMutation, UseMutationOptions, UseMutationReturnType } from 'vue-query'
 
-import { CallerOptions } from 'src/utils/createApi'
+import { CallerOptions } from '@/utils/createApi'
 
 export type ActionMutationFunction<TResData, TReqData> = (variables: TReqData, options?: CallerOptions | undefined) => Promise<TResData>
 
@@ -24,7 +24,7 @@ export const useActionMutation = <TResData, TReqData extends ActionMutationVaria
 
   const mutationOptions = {
     ...options,
-    onSuccess: (data: TResData, variables: TReqData, context: TContext | undefined) => {
+    onSuccess: (data: TResData, variables: TReqData, context: TContext | undefined): void => {
       queryClient.invalidateQueries(invalidateKey)
       options?.onSuccess?.(data, variables, context)
     }

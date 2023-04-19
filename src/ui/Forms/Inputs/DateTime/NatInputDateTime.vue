@@ -11,7 +11,7 @@
     timeSerialize, dateSerialize, dateTimeSerialize,
     timeDeserialize, dateDeserialize, dateTimeDeserialize,
     dateLocalFormat, timeLocalFormat, dateTimeLocalFormat
-  } from 'src/utils/date'
+  } from '@/utils/date'
 
   import Time from './Time.vue'
   import { dateBlocks } from './constants'
@@ -89,7 +89,7 @@
   const pattern = computed(() => [timeLocalFormat, dateLocalFormat, dateTimeLocalFormat][mode.value])
   const placeholder = computed(() => pattern.value?.toLowerCase() ?? '')
 
-  const parseDisplay = (v: string) => {
+  const parseDisplay = (v: string): void => {
     if (!v) {
       d.value = undefined
     } else {
@@ -99,7 +99,7 @@
     }
   }
 
-  const setDayToSave = (day: Dayjs) => {
+  const setDayToSave = (day: Dayjs): void => {
     if (dateToSave.value) {
       day = day
         .hour(dateToSave.value.local().hour())
@@ -109,7 +109,7 @@
     dateToSave.value = day
   }
 
-  const saveDate = () => {
+  const saveDate = (): void => {
     if (!dateToSave.value) return
 
     const conf = { year: dateToSave.value.year(), month: dateToSave.value.month(), date: dateToSave.value.date() }
@@ -131,13 +131,13 @@
     closeDropdown()
   }
 
-  const clearDate = () => {
+  const clearDate = (): void => {
     dateToSave.value = undefined
     if (timeRef.value) timeRef.value.resetTime()
     emit('update:modelValue', '')
   }
 
-  const onBlur = () => {
+  const onBlur = (): void => {
     if (d.value) {
       if (d.value.isValid()) {
         displayValue.value = formatter.value(d.value) ?? ''
@@ -151,20 +151,20 @@
   }
 
   const isDropdownOpen = ref(false)
-  const toggleDropdown = () => {
+  const toggleDropdown = (): void => {
     inputRef.value.$el.focus()
     isDropdownOpen.value = !isDropdownOpen.value
   }
 
-  const openDropdown = () => {
+  const openDropdown = (): void => {
     isDropdownOpen.value = true
   }
 
-  const closeDropdown = () => {
+  const closeDropdown = (): void => {
     isDropdownOpen.value = false
   }
 
-  const focus = () => {
+  const focus = (): void => {
     inputRef.value.$el.focus()
     openDropdown()
   }

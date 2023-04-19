@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import SpinnerSvg from 'src/ui/Spinner/SpinnerSvg.vue'
+  import SpinnerSvg from '@/ui/Spinner/SpinnerSvg.vue'
 
   interface Props {
     wrap?: boolean

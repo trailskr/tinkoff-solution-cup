@@ -77,7 +77,7 @@
 
   let internalChange = false
 
-  const onValue = (val?: string | null) => {
+  const onValue = (val?: string | null): void => {
     if (!val) return
     if (val[0] === '#') {
       const [h, s, v] = hex.hsv(val.slice(1))
@@ -108,7 +108,7 @@
     }
   }, { immediate: true })
 
-  const onInput = () => {
+  const onInput = (): void => {
     internalChange = true
     if (c.a === 100) {
       emit('update:modelValue', `#${hsv.hex([c.h, c.s, c.v])}`)
@@ -118,7 +118,7 @@
     }
   }
 
-  const onValueInput = (val?: string | null) => {
+  const onValueInput = (val?: string | null): void => {
     onValue(val)
     onInput()
   }

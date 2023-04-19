@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { inject, onMounted, onUnmounted, getCurrentInstance } from 'vue'
 
-  import { useForwardTemplateRef } from 'src/use/useForwardTemplateRef'
+  import { useForwardTemplateRef } from '@/use/useForwardTemplateRef'
 
   import { dragControlPropertyName, dragAndDropKey, CmvDragControl, VueComponent, DragElement } from './dragAndDropManager'
 

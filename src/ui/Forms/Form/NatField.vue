@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { StyleValue } from 'vue'
 
-  import { Validation } from 'src/utils/Validation'
-  import { isBoolean } from 'src/utils/typecheck'
+  import { Validation } from '@/utils/Validation'
+  import { isBoolean } from '@/utils/typecheck'
 
   import { getFieldId } from './field'
 
@@ -45,7 +45,7 @@
   const errors = computed(() => props.validation ? props.validation.errors.map((err) => err.message) : [])
 
   const yPaddingDefaultClass = computed(() => props.compact ? 'py-1' : 'py-2.5')
-  const getPadding = (key: keyof PaddingClasses, defaultClass: string) => {
+  const getPadding = (key: keyof PaddingClasses, defaultClass: string): string | null => {
     if (isBoolean(props.padding)) {
       return props.padding ? defaultClass : null
     }
@@ -53,21 +53,21 @@
     return props.padding[key] ?? defaultClass
   }
 
-  const validateValue = (value: unknown) => {
+  const validateValue = (value: unknown): void => {
     props.validation?.test(value)
   }
 
-  const handleModelChange = (v: any) => {
+  const handleModelChange = (v: any): void => {
     emit('update:modelValue', v)
     if (!props.lazyValue) validateValue(v)
   }
 
-  const handleBlur = (e: FocusEvent) => {
+  const handleBlur = (e: FocusEvent): void => {
     if (props.lazyValue) validateValue(props.modelValue)
     emit('blur', e)
   }
 
-  const handleFocus = (e: FocusEvent) => {
+  const handleFocus = (e: FocusEvent): void => {
     emit('focus', e)
   }
 

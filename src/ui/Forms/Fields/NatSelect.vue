@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { Validation } from 'src/utils/Validation'
-  import { isArray } from 'src/utils/typecheck'
+  import { Validation } from '@/utils/Validation'
+  import { isArray } from '@/utils/typecheck'
 
   import { IconGetter, NatInputSelectExpose } from '../Inputs/Select/inputSelect'
 
@@ -93,12 +93,12 @@
 
   const selectInput = ref<NatInputSelectExpose>()
 
-  const reset = () => {
+  const reset = (): void => {
     selectInput.value?.reset()
     emit('reset')
   }
 
-  const focus = () => {
+  const focus = (): void => {
     selectInput.value?.focus()
   }
 </script>

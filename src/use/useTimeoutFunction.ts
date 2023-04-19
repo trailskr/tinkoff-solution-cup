@@ -13,26 +13,26 @@ export const useTimeoutFunction = (
 
   let timer: number | null = null
 
-  const clear = () => {
+  const clear = (): void => {
     if (timer) {
       clearTimeout(timer)
       timer = null
     }
   }
 
-  const stop = () => {
+  const stop = (): void => {
     isPending.value = false
     clear()
   }
 
-  const next = () => {
+  const next = (): void => {
     timer = setTimeout(() => {
       timer = null
       cb(next)
     }, unref(interval)) as unknown as number
   }
 
-  const start = () => {
+  const start = (): void => {
     clear()
     isPending.value = true
     next()

@@ -19,7 +19,7 @@
     return `${props.modelValue.format('MMMM')} ${props.modelValue.year()}`
   })
 
-  const shiftMonth = (months: number) => {
+  const shiftMonth = (months: number): void => {
     emit('update:modelValue', props.modelValue.add(months, 'months'))
   }
 </script>

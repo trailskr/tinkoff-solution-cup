@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { Validation } from 'src/utils/Validation'
+  import { Validation } from '@/utils/Validation'
 
   import { NatInputDateTimeExpose } from '../Inputs/DateTime/dateTime'
 
@@ -33,7 +33,7 @@
 
   const dateInput = ref<NatInputDateTimeExpose>()
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (): void => {
     dateInput.value?.toggleDropdown()
   }
 </script>

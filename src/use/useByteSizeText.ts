@@ -1,6 +1,6 @@
-import { ByteSizeUnit, byteSizeUnit } from 'src/utils/utils'
+import { ByteSizeUnit, byteSizeUnit } from '@/utils/utils'
 
-export const useByteSizeText = () => {
+export const useByteSizeText = (): ((size: number | undefined) => string) => {
   const { t } = useI18n()
 
   return (size: number | undefined) => {

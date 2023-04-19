@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { Validation } from 'src/utils/Validation'
+  import { Validation } from '@/utils/Validation'
 
   export interface Props {
     // Field
@@ -39,7 +39,7 @@
   const value = useVModel(props, 'modelValue', emit)
 
   const inputNumberRef = ref()
-  const focus = () => {
+  const focus = (): void => {
     inputNumberRef.value.inputRef.focus()
   }
   defineExpose({ focus })

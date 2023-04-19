@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { ComputedRef, Ref, WritableComputedRef } from 'vue'
 
-  import { DragCursorPositions } from 'src/ui/DragAndDrop/dragAndDropManager'
-  import { clamp } from 'src/utils/utils'
+  import { DragCursorPositions } from '@/ui/DragAndDrop/dragAndDropManager'
+  import { clamp } from '@/utils/utils'
 
   interface Props {
     left: number
@@ -95,17 +95,17 @@
   let dragStartLeft = 0
   const isDragLeftInProgress = ref(false)
 
-  const onStartLeft = () => {
+  const onStartLeft = (): void => {
     dragStartLeft = viewLeft.value
     isDragLeftInProgress.value = true
   }
 
-  const onMoveLeft = (positions: DragCursorPositions) => {
+  const onMoveLeft = (positions: DragCursorPositions): void => {
     const l = dragStartLeft + positions.diff.x
     viewLeft.value = props.clamp ? clamp(l, 0 - props.clampShift * kx.value, (scrollWidth.value - viewWidth.value) * kx.value + props.clampShift) : l
   }
 
-  const onEndLeft = () => {
+  const onEndLeft = (): void => {
     dragStartLeft = viewLeft.value
     isDragLeftInProgress.value = false
   }
@@ -113,17 +113,17 @@
   let dragStartTop = 0
   const isDragTopInProgress = ref(false)
 
-  const onStartTop = () => {
+  const onStartTop = (): void => {
     dragStartTop = viewTop.value
     isDragTopInProgress.value = true
   }
 
-  const onMoveTop = (positions: DragCursorPositions) => {
+  const onMoveTop = (positions: DragCursorPositions): void => {
     const t = dragStartTop + positions.diff.y
     viewTop.value = props.clamp ? clamp(t, 0 - props.clampShift * kx.value, (scrollHeight.value - viewHeight.value) * ky.value + props.clampShift) : t
   }
 
-  const onEndTop = () => {
+  const onEndTop = (): void => {
     dragStartTop = viewTop.value
     isDragTopInProgress.value = false
   }

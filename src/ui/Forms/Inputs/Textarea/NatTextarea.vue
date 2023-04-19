@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { onVisible } from 'src/use/onVisible'
-  import { isEqual } from 'src/utils/utils'
+  import { onVisible } from '@/use/onVisible'
+  import { isEqual } from '@/utils/utils'
 
   import { calculateTextAreaHeight, TextAreaHeightCalculation } from './calculateTextareaHeight'
 
@@ -23,7 +23,7 @@
 
   const height = computed(() => currentState.value ? `${currentState.value.height}px` : undefined)
 
-  const resizeComponent = (callback?: () => void) => {
+  const resizeComponent = (callback?: () => void): void => {
     if (!textarea.value) return callback?.()
 
     const newState = calculateTextAreaHeight(

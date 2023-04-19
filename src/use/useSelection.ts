@@ -1,6 +1,6 @@
 import { Ref } from 'vue'
 
-import { removeElementFromArray } from 'src/utils/utils'
+import { removeElementFromArray } from '@/utils/utils'
 
 type SelectIdType = number | string
 
@@ -23,19 +23,19 @@ export const useSelection = <T extends SelectIdType = SelectIdType>(): UseSelect
   const selectionSet = new Set<T>()
   const isAnySelected = computed(() => allSelected.value || selection.value.length > 0)
 
-  const add = (id: T) => {
+  const add = (id: T): void => {
     if (selectionSet.has(id)) return
     selectionSet.add(id)
     selection.value.push(id)
   }
 
-  const remove = (id: T) => {
+  const remove = (id: T): void => {
     if (!selectionSet.has(id)) return
     selectionSet.delete(id)
     removeElementFromArray(selection.value, id)
   }
 
-  const clear = () => {
+  const clear = (): void => {
     selectionSet.clear()
     selection.value = []
   }
@@ -48,11 +48,11 @@ export const useSelection = <T extends SelectIdType = SelectIdType>(): UseSelect
         : false
   })
 
-  const isSelected = (id: T) => {
+  const isSelected = (id: T): boolean => {
     return allSelected.value || selection.value.includes(id)
   }
 
-  const setSelected = (id: T, selected: boolean) => {
+  const setSelected = (id: T, selected: boolean): void => {
     if (selected) {
       add(id)
     } else {
@@ -61,7 +61,7 @@ export const useSelection = <T extends SelectIdType = SelectIdType>(): UseSelect
     allSelected.value = false
   }
 
-  const selectOne = (id: T, selected: boolean) => {
+  const selectOne = (id: T, selected: boolean): void => {
     clear()
     if (selected) {
       add(id)
@@ -69,21 +69,21 @@ export const useSelection = <T extends SelectIdType = SelectIdType>(): UseSelect
     allSelected.value = false
   }
 
-  const setSelectedAll = (selected: boolean) => {
+  const setSelectedAll = (selected: boolean): void => {
     clear()
     allSelected.value = selected
   }
 
-  const toggleSelectedAll = () => {
+  const toggleSelectedAll = (): void => {
     setSelectedAll(!isAnySelected.value)
   }
 
-  const clearSelection = () => {
+  const clearSelection = (): void => {
     clear()
     allSelected.value = false
   }
 
-  const setSelectedIds = (ids: T[]) => {
+  const setSelectedIds = (ids: T[]): void => {
     ids.forEach(add)
   }
 

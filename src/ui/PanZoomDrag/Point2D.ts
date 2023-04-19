@@ -1,4 +1,4 @@
-import { isNumber } from 'src/utils/typecheck'
+import { isNumber } from '@/utils/typecheck'
 
 export class Point2D {
   public readonly x: number
@@ -17,31 +17,31 @@ export class Point2D {
     return Math.sqrt(this.x ** 2 + this.y ** 2)
   }
 
-  public mul (val: number | Point2D) {
+  public mul (val: number | Point2D): Point2D {
     return isNumber(val)
       ? new Point2D(this.x * val, this.y * val)
       : new Point2D(this.x * val.x, this.y * val.y)
   }
 
-  public div (val: number | Point2D) {
+  public div (val: number | Point2D): Point2D {
     return isNumber(val)
       ? new Point2D(this.x / val, this.y / val)
       : new Point2D(this.x / val.x, this.y / val.y)
   }
 
-  public add (val: number | Point2D) {
+  public add (val: number | Point2D): Point2D {
     return isNumber(val)
       ? new Point2D(this.x + val, this.y + val)
       : new Point2D(this.x + val.x, this.y + val.y)
   }
 
-  public sub (val: number | Point2D) {
+  public sub (val: number | Point2D): Point2D {
     return isNumber(val)
       ? new Point2D(this.x - val, this.y - val)
       : new Point2D(this.x - val.x, this.y - val.y)
   }
 
-  public map (mapper: (a: number) => number) {
+  public map (mapper: (a: number) => number): Point2D {
     return new Point2D(mapper(this.x), mapper(this.y))
   }
 
@@ -49,15 +49,15 @@ export class Point2D {
     return this.x / this.y
   }
 
-  public distanceTo (point: Point2D) {
+  public distanceTo (point: Point2D): number {
     return Point2D.distance(this, point)
   }
 
-  public clone () {
+  public clone (): Point2D {
     return new Point2D(this.x, this.y)
   }
 
-  public toString () {
+  public toString (): string {
     return `{x: ${Math.round(this.x * 1000) / 1000}, y: ${Math.round(this.y * 1000) / 1000}}`
   }
 

@@ -4,8 +4,8 @@
   import maxSize from 'popper-max-size-modifier'
   import { WatchStopHandle } from 'vue'
 
-  import { onClickOutsideFixed } from 'src/use/onClickOutsideFixed'
-  import { useLocalVModel } from 'src/use/useLocalVModel'
+  import { onClickOutsideFixed } from '@/use/onClickOutsideFixed'
+  import { useLocalVModel } from '@/use/useLocalVModel'
 
   import { addPopoverChildElement } from '../use/usePopovers'
 
@@ -64,7 +64,7 @@
   let interuptableTimeout: number | undefined
   const crossInterruptible = <TArgs extends unknown[]>(func: (...args: TArgs) => void): (...args: TArgs) => void => {
     return (...args: TArgs): void => {
-      const later = () => {
+      const later = (): void => {
         interuptableTimeout = undefined
         func(...args)
       }
@@ -80,7 +80,7 @@
     animationTrigger.value = false
   })
 
-  const onAnimationFinish = () => {
+  const onAnimationFinish = (): void => {
     if (!isAnimationInProgress.value) return
     isAnimationInProgress.value = false
     if (!popper) return
@@ -165,7 +165,7 @@
     else close(false)
   }, { immediate: true })
 
-  const toggle = () => {
+  const toggle = (): void => {
     if (isOpen) close()
     else open()
   }

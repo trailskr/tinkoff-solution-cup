@@ -1,6 +1,6 @@
 import { DeepReadonly } from 'vue'
 
-import { screenBreakpoints } from 'src/screenBreakpoints'
+import { screenBreakpoints } from '@/screenBreakpoints'
 
 export type ScreenBreakpoints = Record<keyof typeof screenBreakpoints, boolean>
 

@@ -1,12 +1,12 @@
 /* eslint-disable import/order */
 import '@unocss/reset/tailwind.css'
-import 'src/styles/main.css'
+import '@/styles/main.css'
 import 'uno.css'
 
 import { initApp } from './initApp'
 import { makeRouter } from './router/makeRouter'
 
-import Main from 'src/Main.vue'
+import Main from '@/Main.vue'
 
 const app = createApp(Main) // createSSRApp(Main)
 const router = makeRouter()

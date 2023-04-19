@@ -20,6 +20,6 @@
 <template>
   <EditorContent
     class="prose max-w-none -my-0.5em"
-    :editor="editor"
+    :editor="(editor as any)"
   />
 </template>

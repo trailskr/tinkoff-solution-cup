@@ -2,7 +2,7 @@
   import { Placement } from '@popperjs/core'
   import { MaybeElement } from '@vueuse/core'
 
-  import { debounce, addEventListener, noop } from 'src/utils/utils'
+  import { debounce, addEventListener, noop } from '@/utils/utils'
 
   import { fixedUseMouseInElement } from './fixedUseMouseInElement'
 
@@ -41,7 +41,7 @@
 
   let innerOpenDebounced: () => void = noop
   let innerOpenClearDebounce: () => void = noop
-  const saveOpen = (openParam: () => void) => {
+  const saveOpen = (openParam: () => void): (() => void) => {
     const [debuncedOpen, clearDebouncedOpen] = debounce(openParam, 300)
     innerOpenDebounced = debuncedOpen
     innerOpenClearDebounce = clearDebouncedOpen
@@ -49,24 +49,24 @@
   }
 
   let innerClose: () => void | undefined
-  const saveClose = (closeParam: () => void) => {
+  const saveClose = (closeParam: () => void): (() => void) => {
     innerClose = closeParam
     return closeParam
   }
 
   let stopTouchEnd = noop
-  const stopTouchEndListen = () => {
+  const stopTouchEndListen = (): void => {
     stopTouchEnd()
     stopTouchEnd = noop
   }
-  const documentTouchEnd = () => {
+  const documentTouchEnd = (): void => {
     if (props.manual) return
     innerOpenClearDebounce()
     innerClose()
     stopTouchEndListen()
   }
 
-  const touchStart = () => {
+  const touchStart = (): void => {
     if (props.manual) return
     innerOpenDebounced()
     stopTouchEndListen()

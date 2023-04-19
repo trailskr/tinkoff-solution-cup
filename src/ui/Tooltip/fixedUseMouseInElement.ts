@@ -1,15 +1,22 @@
 import { unrefElement, MaybeElementRef } from '@vueuse/core'
 import { ref, watch } from 'vue'
 
-import { useGlobalMouse } from 'src/use/useGlobalMouse'
-import { noop } from 'src/utils/utils'
+import { useGlobalMouse } from '@/use/useGlobalMouse'
+import { noop } from '@/utils/utils'
+
+export interface FixedUseMouseInElement {
+  x: Readonly<Ref<number>>
+  y: Readonly<Ref<number>>
+  isOutside: Readonly<Ref<boolean>>
+  stop: () => void
+}
 
 // see https://github.com/vueuse/vueuse/issues/1614
 // added additonal check that element is on top of the view
 // and used global mouse positions
 export const fixedUseMouseInElement = (
   targetRef: MaybeElementRef
-) => {
+): FixedUseMouseInElement => {
   const { x, y, lastComposedPath } = useGlobalMouse()
 
   const isOutside = ref(true)

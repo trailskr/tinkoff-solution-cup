@@ -1,6 +1,6 @@
 import { MaybeElementRef } from '@vueuse/core'
 
-export const useElementSizeToBottom = (elRef: MaybeElementRef<HTMLElement | undefined>) => {
+export const useElementSizeToBottom = (elRef: MaybeElementRef<HTMLElement | undefined>): void => {
   const { height } = useWindowSize()
   watchEffect(() => {
     const el = unrefElement(elRef)

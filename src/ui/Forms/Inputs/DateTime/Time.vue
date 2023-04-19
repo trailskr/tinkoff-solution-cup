@@ -21,7 +21,7 @@
   const emit = defineEmits<Emits>()
 
   const time = ref(defaultTime)
-  const resetTime = () => {
+  const resetTime = (): void => {
     time.value = defaultTime
     selectedMidday.value = 'AM'
   }
@@ -31,7 +31,7 @@
   /**
    * AM|PM switch handler, increment or decrement hours based on midday switch direction
    */
-  const setMidday = (value: MiddayType) => {
+  const setMidday = (value: MiddayType): void => {
     if (!props.modelValue || value === selectedMidday.value) return
 
     const isIncrementHours = value === 'PM' && selectedMidday.value === 'AM'
@@ -42,14 +42,14 @@
 
   const isValidTime = computed(() => /^[0-1][0-9]:[0-5][0-9]$/.test(time.value))
 
-  const onBlur = () => {
+  const onBlur = (): void => {
     if (!isValidTime.value) time.value = defaultTime
   }
 
   /**
    * Set hours and minutes to date if valid time
    */
-  const setTime = () => {
+  const setTime = (): void => {
     nextTick(() => {
       if (!isValidTime.value) return
 
@@ -68,7 +68,7 @@
   /**
    * Convert AM|PM format hour value to 24h format value
    */
-  const normalizeHourTo24Format = (hour: string) => {
+  const normalizeHourTo24Format = (hour: string): string => {
     const hourNormalizer: Record<MiddayType, (hour: string) => string> = {
       AM: (h) => h === '12' ? '0' : h,
       PM: (h) => h === '12' ? h : String(+h + 12)

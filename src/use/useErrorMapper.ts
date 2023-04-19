@@ -1,9 +1,8 @@
 import { MaybeRef } from '@vueuse/core'
 import { Ref } from 'vue'
 
-import { Error } from 'src/api/apiTypes'
-import { isResponseWithData, ResponseWithData } from 'src/utils/createApi'
-import { isObject } from 'src/utils/typecheck'
+import { isResponseWithData, ResponseWithData } from '@/utils/createApi'
+import { isObject } from '@/utils/typecheck'
 
 export const isError = (err: unknown): err is Error => {
   return isObject(err) && 'message' in err
@@ -14,7 +13,9 @@ export const isApiResponseError = (err: unknown): err is ResponseWithData<Error>
   return isResponseWithData(v) && isError(v.data)
 }
 
-export const useErrorMapper = (err: Readonly<Ref<unknown>>, resetMutation?: MaybeRef<() => void>) => {
+export type UseErrorMapperResult = [err: Readonly<Ref<string | undefined>>, reset: () => void]
+
+export const useErrorMapper = (err: Readonly<Ref<unknown>>, resetMutation?: MaybeRef<() => void>): UseErrorMapperResult => {
   const { t } = useI18n()
 
   const innerErr = ref<string>()
@@ -32,9 +33,9 @@ export const useErrorMapper = (err: Readonly<Ref<unknown>>, resetMutation?: Mayb
 
     console.error(`SERVER ERROR:\n${JSON.stringify(isApiResponseError(v) ? v.data : v, null, '  ')}`)
   })
-  const reset = () => {
+  const reset = (): void => {
     if (resetMutation) unref(resetMutation)()
     innerErr.value = undefined
   }
-  return [innerErr, reset] as const
+  return [innerErr, reset]
 }

@@ -19,12 +19,12 @@ export const useLocalVModel = <P extends object, K extends keyof P, EventName ex
   key: K,
   emit: (name: EventName, ...args: any[]) => void,
   options: UseLocalVModelOptions<P[K]> = {}
-) => {
+): Ref<UnwrapRef<P[K]>> => {
   const { deep = false, eventName, defaultValue } = options
 
   const event = eventName || `update:${String(key)}`
 
-  const getValue = () => isDef(props[key]) ? props[key] : defaultValue
+  const getValue = (): P[K] | undefined => isDef(props[key]) ? props[key] : defaultValue
 
   const proxy = ref<P[K]>(getValue()!)
 

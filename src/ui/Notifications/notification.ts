@@ -1,4 +1,4 @@
-import { AlertSemantics } from 'src/ui/Alert/alert'
+import { AlertSemantics } from '@/ui/Alert/alert'
 
 export interface Notification {
   message: string

@@ -24,7 +24,7 @@
 
   const value = useVModel(props, 'modelValue', emit)
 
-  const onValue = (e: Event) => {
+  const onValue = (e: Event): void => {
     const listenEventType = props.lazyModel ? 'change' : 'input'
     if (e.type !== listenEventType) return
 

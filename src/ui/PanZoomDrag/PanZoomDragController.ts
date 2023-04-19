@@ -1,7 +1,7 @@
 import { RingBuffer } from 'ring-buffer-ts'
 import { Ref } from 'vue'
 
-import { throttleRequestAnimationFrame } from 'src/utils/utils'
+import { throttleRequestAnimationFrame } from '@/utils/utils'
 
 import { Point2D } from './Point2D'
 import { Transform2D } from './Transform2D'
@@ -173,9 +173,9 @@ export class PanZoomDragController {
     }
     this._transform = opts.transform
     this._innerTransform = opts.transform.value
-    this.convertTransform = opts.convertTransform ?? ((t) => t)
+    this.convertTransform = opts.convertTransform ?? ((t): Transform2D => t)
 
-    this.onPointerCheck = opts.onPointerCheck != null ? opts.onPointerCheck : () => undefined
+    this.onPointerCheck = opts.onPointerCheck != null ? opts.onPointerCheck : (): undefined => undefined
     this.onClick = opts.onClick
     this.onDoubleClick = opts.onDoubleClick
     this.onPointerDown = opts.onPointerDown
@@ -196,7 +196,7 @@ export class PanZoomDragController {
     })[1]
   }
 
-  public mount (el: HTMLElement) {
+  public mount (el: HTMLElement): void {
     this.dispose()
 
     this.el = el
@@ -210,7 +210,7 @@ export class PanZoomDragController {
       this._innerTransform = transform
     }, { immediate: true })
 
-    this.onDispose = () => {
+    this.onDispose = (): void => {
       document.removeEventListener('pointermove', this._onPointerMove)
       document.removeEventListener('pointerup', this._onPointerUp)
       document.removeEventListener('pointerdown', this._onPointerDown)
@@ -228,14 +228,14 @@ export class PanZoomDragController {
     return !!this.el
   }
 
-  public dispose () {
+  public dispose (): void {
     if (this.onDispose) {
       this.onDispose()
       this.onDispose = undefined
     }
   }
 
-  public isDisposed () {
+  public isDisposed (): boolean {
     return !!this.onDispose
   }
 
@@ -295,14 +295,14 @@ export class PanZoomDragController {
     this._transform.value = transform
   })[0]
 
-  private setTransform (transform: Transform2D) {
+  private setTransform (transform: Transform2D): void {
     const newTransform = this.convertTransform(transform)
     this._innerTransform = newTransform
     this.setTransformThrottled(newTransform)
     this.onTransformChange?.(newTransform)
   }
 
-  private zoomPreserveOrigin (origin: Point2D, k: number) {
+  private zoomPreserveOrigin (origin: Point2D, k: number): void {
     const t = this._innerTransform
     this.setTransform(
       t
@@ -312,7 +312,7 @@ export class PanZoomDragController {
     )
   }
 
-  private setZoomPreserveOrigin (origin: Point2D, k: number) {
+  private setZoomPreserveOrigin (origin: Point2D, k: number): void {
     const t = this._innerTransform
     this.setTransform(
       t
@@ -322,12 +322,12 @@ export class PanZoomDragController {
     )
   }
 
-  public isZoomInAllowed () {
+  public isZoomInAllowed (): boolean {
     if (this.zooms != null) return this.zoomIndex < this.zooms.length - 1
     return this._innerTransform.k < this.maxZoom
   }
 
-  public isZoomOutAllowed () {
+  public isZoomOutAllowed (): boolean {
     if (this.zooms != null) return this.zoomIndex > 0
     return this._innerTransform.k > this.minZoom
   }
@@ -345,11 +345,11 @@ export class PanZoomDragController {
     return { event, downScreenPos: leftTop, moveScreenPos: leftTop }
   }
 
-  private createEventScreenPoint (e: PointerEvent) {
+  private createEventScreenPoint (e: PointerEvent): Point2D {
     return new Point2D(e.clientX * this.scale, e.clientY * this.scale)
   }
 
-  private setCursor (pointerMethod: PointerMethod) {
+  private setCursor (pointerMethod: PointerMethod): void {
     if (!this.el) return
     const cursor = pointerMethodCursorMap[pointerMethod]
     if (this.el.style.cursor !== cursor) {
@@ -357,14 +357,14 @@ export class PanZoomDragController {
     }
   }
 
-  private processPan (e: PointerEvent, inertia: boolean) {
+  private processPan (e: PointerEvent, inertia: boolean): void {
     this.pan = this.pan ?? new RingBuffer(5)
     this.pan.add(this.createEventScreenPoint(e))
     this.inertia = inertia
     this.panSpeed = new Point2D(0, 0)
   }
 
-  private startPanInertia (lastPoints: Point2D[]) {
+  private startPanInertia (lastPoints: Point2D[]): void {
     if (this.animationId != null) window.cancelAnimationFrame(this.animationId)
     const speeds: Point2D[] = []
     let prevPoint = lastPoints[lastPoints.length - 1]
@@ -381,7 +381,7 @@ export class PanZoomDragController {
     ).mul(this.panFriction)
     let elapsed = 0
     let currentSpeed = this.panSpeed
-    const onFrame = (time: number) => {
+    const onFrame = (time: number): void => {
       if (lastTime != null) elapsed += (time - lastTime) / 1000
       currentSpeed = this.panSpeed.add(acceleration.mul(elapsed))
       if (Math.sign(currentSpeed.x) !== Math.sign(this.panSpeed.x)) {
@@ -407,12 +407,12 @@ export class PanZoomDragController {
     this.animationId = window.requestAnimationFrame(onFrame)
   }
 
-  private processDrag (e: PointerEvent) {
+  private processDrag (e: PointerEvent): void {
     if (!this.el) return
     this.drag = this.reprojectPointerEvent(this.el, e)
   }
 
-  private finishDragAndPan (e?: PointerEvent) {
+  private finishDragAndPan (e?: PointerEvent): void {
     this.drag = undefined
     if (this.inertia && this.pan && e) {
       this.pan.add(this.createEventScreenPoint(e))
@@ -425,7 +425,7 @@ export class PanZoomDragController {
     this.inertia = false
   }
 
-  private finishPinchZoom () {
+  private finishPinchZoom (): void {
     this.prevPinchRange = 0
     this.prevPinchCenter = new Point2D(0, 0)
   }
@@ -444,7 +444,7 @@ export class PanZoomDragController {
     this.drag = leftTop
   })[0]
 
-  private _onPointerDown = (e: PointerEvent) => {
+  private _onPointerDown = (e: PointerEvent): void => {
     if (!this.el || !(e.target instanceof HTMLElement)) return
     if (!this.el.contains(e.target)) return
 
@@ -461,7 +461,7 @@ export class PanZoomDragController {
     }
   }
 
-  private _onPointerMove = (e: PointerEvent) => {
+  private _onPointerMove = (e: PointerEvent): void => {
     if (!this.el || !(e.target instanceof HTMLElement)) return
 
     const downEventInfo = this.downEvents.get(e.pointerId)
@@ -546,7 +546,7 @@ export class PanZoomDragController {
     }
   }
 
-  private _onPointerUp = (e: PointerEvent) => {
+  private _onPointerUp = (e: PointerEvent): void => {
     if (this.pan || this.drag) {
       if (this.drag && this.onDragEnd) this.onDragEnd()
       this.finishDragAndPan(e)
@@ -583,7 +583,7 @@ export class PanZoomDragController {
     }
   }
 
-  private _onWheel = (e: WheelEvent) => {
+  private _onWheel = (e: WheelEvent): void => {
     if (!this.el || !this.onWheel) return
 
     const box = this.el.getBoundingClientRect()
@@ -614,7 +614,7 @@ export class PanZoomDragController {
     }
   }
 
-  private _onDoubleClick = (e: MouseEvent) => {
+  private _onDoubleClick = (e: MouseEvent): void => {
     if (!this.el || !(e.target instanceof HTMLElement)) return
     if (!this.el.contains(e.target)) return
 

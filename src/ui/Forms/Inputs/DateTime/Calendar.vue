@@ -37,7 +37,7 @@
     ]
   }
 
-  const isSelectableDay = (day: Dayjs) => {
+  const isSelectableDay = (day: Dayjs): boolean => {
     if (props.noPastSelect && day.isBefore(props.today.startOf('day'))) return false
 
     return props.cursor.isSame(day, 'month')

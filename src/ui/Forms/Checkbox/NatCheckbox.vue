@@ -36,7 +36,7 @@
 
   const id = getFieldId()
 
-  const preventNotInput = (e: MouseEvent) => {
+  const preventNotInput = (e: MouseEvent): void => {
     if (e.target !== inputRef.value) e.stopPropagation()
   }
 </script>

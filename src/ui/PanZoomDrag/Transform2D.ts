@@ -13,11 +13,11 @@ export class Transform2D {
     this.k = k
   }
 
-  public setPosition (x: number, y: number) {
+  public setPosition (x: number, y: number): Transform2D {
     return new Transform2D(x, y, this.k)
   }
 
-  public translate (x: number, y: number) {
+  public translate (x: number, y: number): Transform2D {
     return new Transform2D(this.x + x, this.y + y, this.k)
   }
 
@@ -37,7 +37,7 @@ export class Transform2D {
     return new Point2D((point.x - this.x) / this.k, (point.y - this.y) / this.k)
   }
 
-  public toString () {
+  public toString (): string {
     return `{x: ${this.x}, y: ${this.y}, k: ${this.k}}`
   }
 

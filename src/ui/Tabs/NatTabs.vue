@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { useTemplateRefsList } from '@vueuse/core'
 
-  import { useLocalVModel } from 'src/use/useLocalVModel'
+  import { useLocalVModel } from '@/use/useLocalVModel'
 
   import type { NatTab } from './tabs'
 
@@ -25,7 +25,7 @@
 
   const value = useLocalVModel(props, 'modelValue', emit)
 
-  const select = (tab: NatTab, callback?: () => void) => {
+  const select = (tab: NatTab, callback?: () => void): void => {
     value.value = tab.id
     callback?.()
   }
@@ -51,7 +51,7 @@
   }
 
   const transitionDuration = 300
-  const setTransform = (indicator: HTMLElement | SVGElement, transformFrom: string, transformTo: string) => {
+  const setTransform = (indicator: HTMLElement | SVGElement, transformFrom: string, transformTo: string): void => {
     indicator.style.transform = transformFrom
     setTimeout(() => {
       indicator.style.transition = `transform ${transitionDuration}ms ease-in-out 0ms`

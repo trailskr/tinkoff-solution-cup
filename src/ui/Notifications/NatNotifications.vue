@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { removeElementFromArray } from 'src/utils/utils'
+  import { removeElementFromArray } from '@/utils/utils'
 
   import { Notification } from './notification'
   import { useProvideNotify } from './notify'

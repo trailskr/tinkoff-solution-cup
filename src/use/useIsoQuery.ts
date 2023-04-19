@@ -2,8 +2,8 @@ import { MaybeRef } from '@vueuse/core'
 import type { QueryKey } from 'react-query/types/core'
 import { useQuery, UseQueryOptions, UseQueryReturnType } from 'vue-query'
 
-import { CallerOptions } from 'src/utils/createApi'
-import { isArray } from 'src/utils/typecheck'
+import { CallerOptions } from '@/utils/createApi'
+import { isArray } from '@/utils/typecheck'
 
 export type UseIsoQueryOptions<TQueryFnData, TError = unknown, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey> = Omit<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey' | 'queryFn'>
 
@@ -23,7 +23,7 @@ export const useIsoQuery = <TQueryFnData, TQueryParams, TError = unknown, TData 
 ): UseQueryReturnType<TData, TError> => {
   const reactiveParams = reactive(params) as TQueryParams
   const keys = [...(isArray(queryKey) ? queryKey : [queryKey]), reactiveParams] as unknown as TQueryKey
-  const isoQueryFn = (callerOptions: CallerOptions) => queryFn(reactiveParams, callerOptions)
+  const isoQueryFn = (callerOptions: CallerOptions): TQueryFnData | Promise<TQueryFnData> => queryFn(reactiveParams, callerOptions)
   const result = useQuery<TQueryFnData, TError, TData, TQueryKey>(keys, isoQueryFn, {
     refetchOnWindowFocus: !import.meta.env.DEV,
     retry: import.meta.env.DEV ? false : 3,

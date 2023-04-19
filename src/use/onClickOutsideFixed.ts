@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { ConfigurableWindow, MaybeElementRef } from '@vueuse/core'
+import { noop } from 'unocss'
 import { MaybeRef } from 'vue-query/lib/vue/types'
 
 const defaultWindow = window
@@ -28,16 +29,16 @@ export const onClickOutsideFixed = (
   target: MaybeElementRef,
   handler: (evt: PointerEvent) => void,
   options: OnClickOutsideOptions = {}
-) => {
+): (() => void) => {
   const { window = defaultWindow, ignore, capture = true } = options
 
-  if (!window) { return }
+  if (!window) { return noop }
 
   const shouldListen = ref(true)
 
   let fallback: number
 
-  const listener = (event: PointerEvent, path?: EventTarget[]) => {
+  const listener = (event: PointerEvent, path?: EventTarget[]): void => {
     window.clearTimeout(fallback)
 
     const el = unrefElement(target)
@@ -68,7 +69,7 @@ export const onClickOutsideFixed = (
     }, { passive: true })
   ]
 
-  const stop = () => cleanup.forEach((fn) => fn())
+  const stop = (): void => cleanup.forEach((fn) => fn())
 
   return stop
 }

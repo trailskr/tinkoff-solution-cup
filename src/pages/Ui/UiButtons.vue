@@ -3,7 +3,7 @@
   const variants = ['solid', 'outline'] as const
 
   const value = ref<number>()
-  const toggle = (number: number) => {
+  const toggle = (number: number): void => {
     value.value = number === value.value ? undefined : number
   }
 </script>

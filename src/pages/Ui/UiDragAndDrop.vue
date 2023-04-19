@@ -1,17 +1,17 @@
 <script setup lang="ts">
-  const logDrop = (...args: any[]) => {
+  const logDrop = (...args: any[]): void => {
     console.log('drop', ...args)
   }
-  const logDragOver = (...args: any[]) => {
+  const logDragOver = (...args: any[]): void => {
     console.log('dragOver', ...args)
   }
-  const logDragStart = (...args: any[]) => {
+  const logDragStart = (...args: any[]): void => {
     console.log('dragStart', ...args)
   }
-  const logDragMove = (...args: any[]) => {
+  const logDragMove = (...args: any[]): void => {
     console.log('dragMove', ...args)
   }
-  const logDragEnd = (...args: any[]) => {
+  const logDragEnd = (...args: any[]): void => {
     console.log('dragEnd', ...args)
   }
 </script>

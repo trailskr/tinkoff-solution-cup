@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { useFocusTrap, UseFocusTrapReturn } from '@vueuse/integrations/useFocusTrap'
 
-  import { onClickOutsideFixed } from 'src/use/onClickOutsideFixed'
+  import { onClickOutsideFixed } from '@/use/onClickOutsideFixed'
+  import { VueClassProperty } from '@/utils/vueClassProperty'
 
   import { addPopoverChildElement } from '../use/usePopovers'
 
@@ -9,7 +10,7 @@
     modelValue?: boolean
     focusTrap?: boolean
     contentRef?: (el: HTMLElement | undefined) => void
-    contentClass?: string | (string | Record<string, boolean>)[]
+    contentClass?: VueClassProperty
     closeByClickOutside?: boolean
   }
 
@@ -45,7 +46,7 @@
     })
     : {})
 
-  const close = (shouldEmit = true) => {
+  const close = (shouldEmit = true): void => {
     if (!isShown.value || !isVisible.value) return
     trap.value.deactivate?.()
     if (shouldEmit) emit('update:modelValue', false)
@@ -54,12 +55,12 @@
     body.style.marginRight = ''
   }
 
-  const onFinish = () => {
+  const onFinish = (): void => {
     if (!isShown.value) return
     isShown.value = false
   }
 
-  const open = (shouldEmit = true) => {
+  const open = (shouldEmit = true): void => {
     if (isShown.value) return
     if (shouldEmit) emit('update:modelValue', true)
     isShown.value = true
@@ -75,7 +76,7 @@
     else close(false)
   }, { immediate: true })
 
-  const toggle = () => {
+  const toggle = (): void => {
     if (isShown.value) close()
     else open()
   }

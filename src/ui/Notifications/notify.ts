@@ -7,7 +7,7 @@ export type Notify = (notification: Notification) => void
 
 const notifyKey: InjectionKey<I18nNotify> = Symbol('notifyKey')
 
-export const useProvideNotify = (notify: Notify) => {
+export const useProvideNotify = (notify: Notify): void => {
   provide(notifyKey, (notification: Notification) => {
     const { semantics = 'success', message = 'operation-successful', duration = 3000 } = notification
 

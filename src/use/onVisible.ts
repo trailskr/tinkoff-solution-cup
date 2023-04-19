@@ -1,6 +1,6 @@
 import { MaybeElementRef } from '@vueuse/core'
 
-const waitElementVisible = (elRef: MaybeElementRef, fn: () => void, calledTimes = 1) => {
+const waitElementVisible = (elRef: MaybeElementRef, fn: () => void, calledTimes = 1): void => {
   const el = unrefElement(elRef)
   if (el && el.clientHeight !== 0 && el.clientWidth !== 0) {
     fn()
@@ -15,7 +15,7 @@ const waitElementVisible = (elRef: MaybeElementRef, fn: () => void, calledTimes 
   })
 }
 
-export const onVisible = (elRef: MaybeElementRef, fn: () => void) => {
+export const onVisible = (elRef: MaybeElementRef, fn: () => void): void => {
   onMounted(() => {
     waitElementVisible(elRef, fn)
   })

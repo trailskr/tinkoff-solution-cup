@@ -1,6 +1,6 @@
 import { InjectionKey, reactive } from 'vue'
 
-import { throttleRequestAnimationFrame } from 'src/utils/utils'
+import { throttleRequestAnimationFrame } from '@/utils/utils'
 
 /* eslint-disable no-use-before-define */
 
@@ -157,7 +157,7 @@ const getNodeUnderCursor = ({ x, y }: Coords, avatar?: HTMLElement): DragElement
   return isDragElement(node) ? node : undefined
 }
 
-const positionAvatar = (s: DragStateInProgress) => {
+const positionAvatar = (s: DragStateInProgress): void => {
   const move = s.progress.move
   const x = move.x - s.start.x
   const y = move.y - s.start.y
@@ -174,7 +174,7 @@ export const makeDropSection = (isAtTop?: boolean, isAtLeft?: boolean): DropSect
   isAtRight: isAtLeft == null ? undefined : !isAtLeft
 })
 
-const moveAvatar = (s: DragStateInProgress, coords: Coords) => {
+const moveAvatar = (s: DragStateInProgress, coords: Coords): void => {
   const p = s.progress
   p.move = coords
   const avatar = p.avatar

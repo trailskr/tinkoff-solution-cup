@@ -33,8 +33,8 @@
 
   import { ref, computed, getCurrentInstance, provide } from 'vue'
 
-  import { useForwardTemplateRef } from 'src/use/useForwardTemplateRef'
-  import { isArray } from 'src/utils/typecheck'
+  import { useForwardTemplateRef } from '@/use/useForwardTemplateRef'
+  import { isArray } from '@/utils/typecheck'
 
   import type { DragElement, DragState, CmvDragAndDrop, DropSection, DragCursorPositions, VueComponent, DragAndDropStatus } from './dragAndDropManager'
   import { draggablePropertyName, dragAndDropKey } from './dragAndDropManager'

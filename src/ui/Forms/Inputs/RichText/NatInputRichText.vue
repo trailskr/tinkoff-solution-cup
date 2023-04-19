@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { EditorContent } from '@tiptap/vue-3'
 
-  import { useMarkdownEditor } from './MarkdownEditor'
+  import { MarkdownEditor, useMarkdownEditor } from './MarkdownEditor'
   import { extensions } from './editorExtensions'
 
   interface Props {
@@ -23,7 +23,7 @@
   const editor = useMarkdownEditor({
     content: props.modelValue,
     onUpdate: ({ editor: ed }) => {
-      emit('update:modelValue', ed.getMarkdown())
+      emit('update:modelValue', (ed as MarkdownEditor).getMarkdown())
     },
     extensions
   })
@@ -34,7 +34,7 @@
 
   const showLinkEditPrompt = ref(false)
   const linkHref = ref('')
-  const toggleLink = () => {
+  const toggleLink = (): void => {
     if (!editor.value) return
     linkHref.value = editor.value.isActive('link')
       ? editor.value.getAttributes('link').href
@@ -42,7 +42,7 @@
     showLinkEditPrompt.value = true
   }
 
-  const setLinkUrl = () => {
+  const setLinkUrl = (): void => {
     if (!editor.value) return
     showLinkEditPrompt.value = false
     const href = linkHref.value
@@ -199,7 +199,7 @@
     <EditorContent
       class="prose max-w-none px-2.5"
       :class="editorClass"
-      :editor="editor"
+      :editor="(editor as any)"
     />
   </div>
 </template>

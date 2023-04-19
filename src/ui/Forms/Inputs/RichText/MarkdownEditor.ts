@@ -4,7 +4,7 @@ import { createMarkdownEditor, MarkdownEditor as MarkdownEditorType, MarkdownEdi
 export const MarkdownEditor = createMarkdownEditor(Editor)
 export type MarkdownEditor = MarkdownEditorType
 
-export const useMarkdownEditor = (options?: Partial<MarkdownEditorOptions> | undefined) => {
+export const useMarkdownEditor = (options?: Partial<MarkdownEditorOptions> | undefined): Ref<MarkdownEditor | undefined> => {
   const editor = shallowRef<MarkdownEditor>()
 
   onMounted(() => {

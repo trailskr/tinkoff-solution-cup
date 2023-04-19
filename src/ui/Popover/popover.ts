@@ -1,2 +1,2 @@
 let popoverId = 0
-export const getPopoverId = () => `popover-${popoverId++}`
+export const getPopoverId = (): string => `popover-${popoverId++}`

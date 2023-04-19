@@ -1,11 +1,16 @@
 import { describe, expect, it } from 'vitest'
 
-import { v, ValidationError } from 'src/utils/Validation'
-import { Path } from 'src/utils/path'
-import { isEqual } from 'src/utils/utils'
-import { min, required, maxLength, object } from 'src/utils/validators'
+import { v, ValidationError } from '@/utils/Validation'
+import { Path } from '@/utils/path'
+import { isEqual } from '@/utils/utils'
+import { min, required, maxLength, object } from '@/utils/validators'
 
-const errorMessage = (rule: string, path: Path = [], message = rule) => ({
+interface ErrorMessage {
+  rule: string
+  path: Path
+  message: string
+}
+const errorMessage = (rule: string, path: Path = [], message = rule): ErrorMessage => ({
   rule,
   path,
   message
@@ -389,7 +394,7 @@ describe('Validation', () => {
       }]
     }
 
-    const getAllValues = () => {
+    const getAllValues = (): {id: number}[] => {
       const values: {id: number}[] = []
       data.arr1.forEach((item) => {
         item.arr2.forEach((element) => {

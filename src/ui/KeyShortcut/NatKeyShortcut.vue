@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { browser } from 'src/utils/browser'
+  import { browser } from '@/utils/browser'
 
   interface Props {
     pc: string[]
@@ -20,7 +20,7 @@
     Divide: '/'
   }
 
-  const mapNumKeys = (key: string) => {
+  const mapNumKeys = (key: string): string => {
     return numKeysAliases[key] ?? key
   }
 
@@ -29,7 +29,7 @@
     Equal: '='
   }
 
-  const mapKeys = (key: string) => {
+  const mapKeys = (key: string): string => {
     return keysAliases[key] ?? key
   }
 

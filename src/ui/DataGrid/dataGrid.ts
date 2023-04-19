@@ -1,7 +1,7 @@
 import { Component } from 'vue'
 
-import { compilePath, get, Path, set } from 'src/utils/path'
-import { isArray, isString } from 'src/utils/typecheck'
+import { compilePath, get, Path, set } from '@/utils/path'
+import { isArray, isString } from '@/utils/typecheck'
 
 export type DataGridRowKey = string | number
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -50,7 +50,7 @@ export const mapToColumn = <T extends DataGridRow = DataGridRow, Key extends key
     return {
       ...rest,
       getter: (row: T) => get(row, compiledPath) as T[Key],
-      setter: (row: T, value: T[Key]) => { set(row, compiledPath, value) }
+      setter: (row: T, value: T[Key]): void => { set(row, compiledPath, value) }
     }
   }
   return columnDef

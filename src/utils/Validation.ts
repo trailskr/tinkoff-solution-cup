@@ -1,4 +1,4 @@
-import { and, array, dateTime, email, empty, equals, inList, integer, length, max, maxDateTime, maxLength, maxTimesInList, min, minDateTime, minLength, notEquals, notInList, number, object, objectLike, or, pattern, required, string, url } from 'src/utils/validators'
+import { and, array, dateTime, email, empty, equals, inList, integer, length, max, maxDateTime, maxLength, maxTimesInList, min, minDateTime, minLength, notEquals, notInList, number, object, objectLike, or, pattern, required, string, url } from '@/utils/validators'
 
 import { Path, get } from './path'
 import { isFunction, isObjectLike, isArray, isString, isBoolean } from './typecheck'
@@ -24,7 +24,7 @@ export type KeyGetter = (item: any) => Key
 export type KeyGetterDef = Key | KeyGetter
 
 const getKeyGetter = (keyGetterDef: KeyGetterDef): KeyGetter => {
-  return isFunction(keyGetterDef) ? keyGetterDef : (item: any) => item?.[keyGetterDef]
+  return isFunction(keyGetterDef) ? keyGetterDef : (item: any): Key => item?.[keyGetterDef]
 }
 
 export interface ValidationRule {
@@ -52,7 +52,7 @@ export type AggregationOptions = ValidationOptions | ValidatorFactory
 const getValidatorFactory = (aggregationOptions: AggregationOptions): ValidatorFactory => {
   return isFunction(aggregationOptions)
     ? aggregationOptions
-    : () => new Validation(aggregationOptions)
+    : (): Validation => new Validation(aggregationOptions)
 }
 
 export class Validation {
@@ -287,7 +287,7 @@ export class Validation {
     })
   }
 
-  private _test (val: unknown, skipAddErrors = false) {
+  private _test (val: unknown, skipAddErrors = false): void {
     this._errors = []
     this._isDirty = true
     this._isValid = true
@@ -305,13 +305,13 @@ export class Validation {
     if (!skipAddErrors) this._parent?._addChildErrors(this)
   }
 
-  test (val: unknown) {
+  test (val: unknown): boolean {
     this._test(val)
     this._parent?._revalidateParentChain(this)
     return this._isValid
   }
 
-  reset () {
+  reset (): void {
     this._isValid = true
     this._isSelfValid = true
     this._isDirty = false
@@ -380,6 +380,7 @@ export class Validation {
     return newValidation
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   get (value: any, path: Path): Validation {
     if (path.length === 0) return this
     // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -401,46 +402,46 @@ export class Validation {
     return validation
   }
 
-  get isValid () { return this._isValid }
-  get isSelfValid () { return this._isSelfValid }
-  get isInvalid () { return !this._isValid }
-  get isSelfInvalid () { return !this._isSelfValid }
-  get isDirty () { return this._isDirty }
-  get errors () { return this._errors }
-  get selfErrors () { return this._errors.filter((error) => error.fromKey === this._key) }
-  get fields () { return this._fields ?? {} }
-  get children () { return this._children ?? {} }
+  get isValid (): boolean { return this._isValid }
+  get isSelfValid (): boolean { return this._isSelfValid }
+  get isInvalid (): boolean { return !this._isValid }
+  get isSelfInvalid (): boolean { return !this._isSelfValid }
+  get isDirty (): boolean { return this._isDirty }
+  get errors (): ValidationError[] { return this._errors }
+  get selfErrors (): ValidationError[] { return this._errors.filter((error) => error.fromKey === this._key) }
+  get fields (): Record<string, Validation> { return this._fields ?? {} }
+  get children (): Record<string, Validation> { return this._children ?? {} }
 
-  empty () { return this.rule('empty', empty) }
-  required () { return this.rule('required', required) }
-  number () { return this.rule('number', number) }
-  integer () { return this.rule('integer', integer) }
-  string () { return this.rule('string', string) }
-  objectLike () { return this.rule('objectLike', objectLike) }
-  object () { return this.rule('object', object) }
-  array () { return this.rule('array', array) }
-  dateTime () { return this.rule('dateTime', dateTime) }
-  email () { return this.rule('email', email) }
-  url () { return this.rule('url', url) }
+  empty (): typeof this { return this.rule('empty', empty) }
+  required (): typeof this { return this.rule('required', required) }
+  number (): typeof this { return this.rule('number', number) }
+  integer (): typeof this { return this.rule('integer', integer) }
+  string (): typeof this { return this.rule('string', string) }
+  objectLike (): typeof this { return this.rule('objectLike', objectLike) }
+  object (): typeof this { return this.rule('object', object) }
+  array (): typeof this { return this.rule('array', array) }
+  dateTime (): typeof this { return this.rule('dateTime', dateTime) }
+  email (): typeof this { return this.rule('email', email) }
+  url (): typeof this { return this.rule('url', url) }
 
-  length (...args: Parameters<typeof length>) { return this.rule('length', length(...args)) }
-  minLength (...args: Parameters<typeof minLength>) { return this.rule('minLength', minLength(...args)) }
-  maxLength (...args: Parameters<typeof maxLength>) { return this.rule('maxLength', maxLength(...args)) }
-  equals (...args: Parameters<typeof equals>) { return this.rule('equals', equals(...args)) }
-  notEquals (...args: Parameters<typeof notEquals>) { return this.rule('notEquals', notEquals(...args)) }
-  min (...args: Parameters<typeof min>) { return this.rule('min', min(...args)) }
-  max (...args: Parameters<typeof max>) { return this.rule('max', max(...args)) }
-  pattern (...args: Parameters<typeof pattern>) { return this.rule('pattern', pattern(...args)) }
-  inList (...args: Parameters<typeof inList>) { return this.rule('inList', inList(...args)) }
-  maxTimesInList (...args: Parameters<typeof maxTimesInList>) { return this.rule('maxTimesInList', maxTimesInList(...args)) }
-  notInList (...args: Parameters<typeof notInList>) { return this.rule('notInList', notInList(...args)) }
-  minDateTime (...args: Parameters<typeof minDateTime>) { return this.rule('minDateTime', minDateTime(...args)) }
-  maxDateTime (...args: Parameters<typeof maxDateTime>) { return this.rule('maxDateTime', maxDateTime(...args)) }
-  and (...args: Parameters<typeof and>) { return this.rule('and', and(...args)) }
-  or (...args: Parameters<typeof or>) { return this.rule('or', or(...args)) }
+  length (...args: Parameters<typeof length>): typeof this { return this.rule('length', length(...args)) }
+  minLength (...args: Parameters<typeof minLength>): typeof this { return this.rule('minLength', minLength(...args)) }
+  maxLength (...args: Parameters<typeof maxLength>): typeof this { return this.rule('maxLength', maxLength(...args)) }
+  equals (...args: Parameters<typeof equals>): typeof this { return this.rule('equals', equals(...args)) }
+  notEquals (...args: Parameters<typeof notEquals>): typeof this { return this.rule('notEquals', notEquals(...args)) }
+  min (...args: Parameters<typeof min>): typeof this { return this.rule('min', min(...args)) }
+  max (...args: Parameters<typeof max>): typeof this { return this.rule('max', max(...args)) }
+  pattern (...args: Parameters<typeof pattern>): typeof this { return this.rule('pattern', pattern(...args)) }
+  inList (...args: Parameters<typeof inList>): typeof this { return this.rule('inList', inList(...args)) }
+  maxTimesInList (...args: Parameters<typeof maxTimesInList>): typeof this { return this.rule('maxTimesInList', maxTimesInList(...args)) }
+  notInList (...args: Parameters<typeof notInList>): typeof this { return this.rule('notInList', notInList(...args)) }
+  minDateTime (...args: Parameters<typeof minDateTime>): typeof this { return this.rule('minDateTime', minDateTime(...args)) }
+  maxDateTime (...args: Parameters<typeof maxDateTime>): typeof this { return this.rule('maxDateTime', maxDateTime(...args)) }
+  and (...args: Parameters<typeof and>): typeof this { return this.rule('and', and(...args)) }
+  or (...args: Parameters<typeof or>): typeof this { return this.rule('or', or(...args)) }
 }
 
-export const v = (options?: ValidationOptions) => new Validation(options)
+export const v = (options?: ValidationOptions): Validation => new Validation(options)
 
 // window.v = v
 // window.and = and

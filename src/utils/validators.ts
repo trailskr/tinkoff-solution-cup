@@ -1,7 +1,7 @@
 import { isString, isNumber, isArray, isVoid, isDate, isObjectLike, isObject, isFunction } from './typecheck'
 import { isEqual } from './utils'
 
-const isNotPresent = (v: unknown) => isVoid(v) || v === ''
+const isNotPresent = (v: unknown): boolean => isVoid(v) || v === ''
 
 export type Validator = (v: unknown) => boolean
 
@@ -29,11 +29,11 @@ export type equalFunction = (a: unknown, b: unknown) => boolean
 export const length = (len: number) => (v: unknown): boolean => isNotPresent(v) || ((isString(v) || isArray(v)) && v.length === len)
 export const minLength = (len: number) => (v: unknown): boolean => isNotPresent(v) || ((isString(v) || isArray(v)) && v.length >= len)
 export const maxLength = (len: number) => (v: unknown): boolean => isNotPresent(v) || ((isString(v) || isArray(v)) && v.length <= len)
-export const equals = (toEq: unknown, equalFn: equalFunction = isEqual) => (v: unknown) => isVoid(toEq) ? v === toEq : isNotPresent(v) || equalFn(v, toEq)
-export const notEquals = (toEq: unknown, equalFn: equalFunction = isEqual) => (v: unknown) => isVoid(toEq) ? v !== toEq : isNotPresent(v) || !equalFn(v, toEq)
+export const equals = (toEq: unknown, equalFn: equalFunction = isEqual) => (v: unknown): boolean => isVoid(toEq) ? v === toEq : isNotPresent(v) || equalFn(v, toEq)
+export const notEquals = (toEq: unknown, equalFn: equalFunction = isEqual) => (v: unknown): boolean => isVoid(toEq) ? v !== toEq : isNotPresent(v) || !equalFn(v, toEq)
 export const min = (minV: unknown) => (v: unknown): boolean => isNotPresent(v) || isNotPresent(minV) || (((isNumber(v) && isNumber(minV)) || (isString(v) && isString(minV))) && (v >= minV))
 export const max = (maxV: unknown) => (v: unknown): boolean => isNotPresent(v) || isNotPresent(maxV) || (((isNumber(v) && isNumber(maxV)) || (isString(v) && isString(maxV))) && (v <= maxV))
-export const pattern = (pat: string | RegExp) => {
+export const pattern = (pat: string | RegExp): ((v: unknown) => boolean) => {
   const re = isString(pat) ? new RegExp(pat) : pat
   return (v: unknown): boolean => isNotPresent(v) || (isString(v) && re.test(v))
 }
@@ -44,7 +44,7 @@ export const email = pattern(emailRe)
 export const url = pattern(urlRe)
 
 export type ListGetter = () => unknown[]
-const getList = (list: unknown[] | ListGetter) => isFunction(list) ? list() : list
+const getList = (list: unknown[] | ListGetter): unknown[] => isFunction(list) ? list() : list
 
 export const inList = (list: unknown[] | ListGetter, equalFn: equalFunction = isEqual) => (v: unknown): boolean => isNotPresent(v) || getList(list).some((item) => equalFn(item, v))
 export const notInList = (list: unknown[] | ListGetter, equalFn: equalFunction = isEqual) => (v: unknown): boolean => isNotPresent(v) || !getList(list).some((item) => equalFn(item, v))

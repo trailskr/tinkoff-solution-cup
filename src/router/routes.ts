@@ -1,5 +1,6 @@
-import MainLayout from 'src/layouts/MainLayout.vue'
 import { RouteRecordRaw } from 'vue-router'
+
+import MainLayout from '@/layouts/MainLayout.vue'
 
 const Ui = (): Promise<typeof import('*.vue')> => import('../pages/Ui/Ui.vue')
 
@@ -18,5 +19,5 @@ export const routes: RouteRecordRaw[] = [{
 }, {
   path: '/:catchAll(.*)*',
   name: 'Error404',
-  component: () => import('src/pages/Error404.vue')
+  component: () => import('@/pages/Error404.vue')
 }]

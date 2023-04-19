@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { Validation } from 'src/utils/Validation'
+  import { Validation } from '@/utils/Validation'
 
   export interface Props {
     // Field

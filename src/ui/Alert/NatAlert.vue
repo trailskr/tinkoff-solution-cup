@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { AlertSemantics } from 'src/ui/Alert/alert'
-  import { useLocalVModel } from 'src/use/useLocalVModel'
+  import { AlertSemantics } from '@/ui/Alert/alert'
+  import { useLocalVModel } from '@/use/useLocalVModel'
 
   interface Props {
     semantics?: AlertSemantics

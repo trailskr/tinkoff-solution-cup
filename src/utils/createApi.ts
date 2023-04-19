@@ -52,15 +52,16 @@ export interface ApiOptions {
 const textContentType = 'text/'
 const jsonContentType = 'application/json'
 
-const addDataResponse = <TRes>(res: Response, data: TRes) => {
+const addDataResponse = <TRes>(res: Response, data: TRes): ResponseWithData<TRes> => {
   const resWithData = res as ResponseWithData<TRes>
   resWithData.data = data
   return resWithData
 }
 
-export const handleError = <TRes = unknown>(res: Response) => {
+export const handleError = <TRes = unknown>(res: Response): Response | Promise<never> => {
   if (res.ok) return res
   const contentType = res.headers.get('Content-Type')
+  // eslint-disable-next-line prefer-promise-reject-errors
   if (!contentType) return Promise.reject(res as ResponseWithData<TRes>)
   if (contentType.includes(jsonContentType)) {
     return res.json().then((data) => Promise.reject(addDataResponse(res, data)))
@@ -162,10 +163,10 @@ export const createApi = (options: ApiOptions): Api => {
     put: makeCallerWithInterceptors(baseUrl, 'PUT', requestInterceptors, responseInterceptors),
     delete: makeCallerWithInterceptors(baseUrl, 'DELETE', requestInterceptors, responseInterceptors),
 
-    addRequestInterceptor: (interceptor: ApiRequestInterceptor) => {
+    addRequestInterceptor: (interceptor: ApiRequestInterceptor): void => {
       requestInterceptors.push(interceptor)
     },
-    addResponseInterceptor: (interceptor: ApiResponseInterceptor) => {
+    addResponseInterceptor: (interceptor: ApiResponseInterceptor): void => {
       responseInterceptors.push(interceptor)
     }
   }

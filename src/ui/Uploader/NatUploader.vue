@@ -1,7 +1,8 @@
 <script setup lang="ts">
-  import { isArray, isString } from 'src/utils/typecheck'
-  import { upload, UploadItem, UploadParams } from 'src/utils/upload'
-  import { removeElementFromArray } from 'src/utils/utils'
+  import { isArray, isString } from '@/utils/typecheck'
+  import { upload, UploadItem, UploadParams } from '@/utils/upload'
+  import { removeElementFromArray } from '@/utils/utils'
+import { VueClassProperty } from '@/utils/vueClassProperty'
 
   import { NatUploaderExpose, UnaccaptableFileReason, UploadedResponse, UploadError, BeforeUploadFn } from './uploader'
 
@@ -48,7 +49,7 @@
 
   const isUploading = computed(() => uploadQueue.value.length !== 0)
 
-  const addFile = (file: File, error?: UploadError) => {
+  const addFile = (file: File, error?: UploadError): void => {
     uploadQueue.value.push({
       title: file.name,
       progress: 0,
@@ -60,10 +61,10 @@
 
   const input = ref<HTMLInputElement>()
 
-  const startUpload = () => {
-    if (uploadQueue.value.length === 0) return
+  const startUpload = (): Promise<void> => {
+    if (uploadQueue.value.length === 0) return Promise.resolve()
     const allowed = uploadQueue.value.filter((item) => !item.error)
-    if (allowed.length === 0) return
+    if (allowed.length === 0) return Promise.resolve()
     return Promise.all(allowed.map((item) => {
       return Promise.resolve(props.beforeUpload?.(item.file)).then((newFile) => {
         let url = props.url
@@ -106,7 +107,7 @@
     })
   }
 
-  const initQueue = (files: FileList | null) => {
+  const initQueue = (files: FileList | null): void => {
     if (!files || !files[0]) return
     if (!props.multiple) uploadQueue.value = []
 
@@ -125,11 +126,11 @@
     startUpload()
   }
 
-  const remove = (item: UploadQueueItem) => {
+  const remove = (item: UploadQueueItem): void => {
     removeElementFromArray(uploadQueue.value, item)
   }
 
-  const reset = () => {
+  const reset = (): void => {
     uploadSuccess.value = undefined
     uploadQueue.value = []
     input.value?.form?.reset()
@@ -173,12 +174,12 @@
     { 'cursor-no-drop bg-tertiary border-substrate': props.disabled }
   ])
 
-  const queueItemClass = (item: UploadQueueItem) => [
+  const queueItemClass = (item: UploadQueueItem): VueClassProperty => ([
     item.error ? 'bg-danger bg-opacity-10' : 'bg-substrate',
-    { 'border-1 border-danger': item.error }
-  ]
+    { 'border-1 border-danger': !!item.error }
+  ])
 
-  const onDragOver = (e: DragEvent) => {
+  const onDragOver = (e: DragEvent): void => {
     if (props.disabled) return
     e.preventDefault()
     e.stopPropagation()
@@ -195,7 +196,7 @@
     if (leaveTimeout) clearTimeout(leaveTimeout)
   }
 
-  const onDragLeave = (e: DragEvent) => {
+  const onDragLeave = (e: DragEvent): void => {
     if (props.disabled) return
     e.preventDefault()
     e.stopPropagation()
@@ -204,7 +205,7 @@
     }, 100)
   }
 
-  const onDrop = (e: DragEvent) => {
+  const onDrop = (e: DragEvent): void => {
     if (!e.dataTransfer) return
     if (props.disabled) return
     e.preventDefault()

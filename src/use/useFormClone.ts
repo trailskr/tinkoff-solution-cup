@@ -1,12 +1,12 @@
 // import { diff } from 'deep-diff'
 import { Ref } from 'vue'
 
-// import { get } from 'src/utils/path'
-import { isArray, isObject } from 'src/utils/typecheck'
-import { deepMerge, isEqual, deepClone, DeepCloneOptions } from 'src/utils/utils'
+// import { get } from '@/utils/path'
+import { isArray, isObject } from '@/utils/typecheck'
+import { deepMerge, isEqual, deepClone, DeepCloneOptions } from '@/utils/utils'
 
 // filter only defined arrays
-const filter = (key: string | number, from: unknown, to:unknown) => {
+const filter = (key: string | number, from: unknown, to:unknown): boolean => {
   if (!isObject(to)) return true
   if (!isArray(to[key])) return true
   return isObject(from) && isArray(from[key])

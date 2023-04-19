@@ -1,12 +1,12 @@
 import { Ref } from 'vue'
 
-import { removeElementFromArray } from 'src/utils/utils'
+import { removeElementFromArray } from '@/utils/utils'
 
 export type PopoverElement = Ref<HTMLElement | null | undefined>
 
 const allPopovers = ref<PopoverElement[]>([])
 
-export const addPopoverChildElement = (child: PopoverElement) => {
+export const addPopoverChildElement = (child: PopoverElement): Readonly<Ref<PopoverElement[]>> => {
   allPopovers.value.push(child)
   onBeforeUnmount(() => {
     removeElementFromArray(allPopovers.value, child)

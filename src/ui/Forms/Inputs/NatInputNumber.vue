@@ -26,7 +26,7 @@
 
   const input = ref<HTMLInputElement>()
 
-  const updateInputValue = () => {
+  const updateInputValue = (): void => {
     if (!input.value) return
     input.value.value = Number.isFinite(props.modelValue) ? `${props.modelValue}` : ''
   }
@@ -37,7 +37,7 @@
 
   let isInternalChange = false
 
-  const onValue = (e: Event) => {
+  const onValue = (e: Event): void => {
     isInternalChange = true
     const listenEventType = props.lazyModel ? 'change' : 'input'
     if (e.type !== listenEventType) return
@@ -46,7 +46,7 @@
     if (!target) return
 
     // value is not a number
-    if (target.validity.badInput) return true
+    if (target.validity.badInput) return
 
     let num = target.valueAsNumber
     if (isNaN(num)) {
@@ -80,14 +80,14 @@
 
   onMounted(updateInputValue)
 
-  const onBlur = (e: FocusEvent) => {
+  const onBlur = (e: FocusEvent): void => {
     const target = e.target as HTMLInputElement | null
     if (!target) return
     if (target.validity.badInput) return
     updateInputValue()
   }
 
-  const onPaste = (e: ClipboardEvent) => {
+  const onPaste = (e: ClipboardEvent): void => {
     const pasteText = e.clipboardData?.getData('text')
     if (!pasteText || !/^\d+$/.test(pasteText)) return
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import NatCheckbox from 'src/ui/Forms/Checkbox/NatCheckbox.vue'
-  import { FetchOptions, SelectFetch } from 'src/ui/Forms/Inputs/Select/inputSelect'
-  import { v } from 'src/utils/Validation'
-  import { fullTextSearch } from 'src/utils/utils'
+  import NatCheckbox from '@/ui/Forms/Checkbox/NatCheckbox.vue'
+  import { FetchOptions, SelectFetch } from '@/ui/Forms/Inputs/Select/inputSelect'
+  import { v } from '@/utils/Validation'
+  import { fullTextSearch } from '@/utils/utils'
 
   const validation = reactive(v())
 
@@ -10,7 +10,7 @@
 
   const disabled = ref(false)
 
-  const getOptionsText = () => ([
+  const getOptionsText = (): string[] => ([
     'value1',
     'value2',
     'value3',
@@ -21,8 +21,11 @@
 
   interface ObjectOption {
     id: number
+    groupId: number
+    groupName: string
     textField: string
     someField: string
+    disabled?: boolean
   }
 
   interface ObjectOption2 {
@@ -30,7 +33,7 @@
     name: string
   }
 
-  const getOptionsObject = () => ([{
+  const getOptionsObject = (): ObjectOption[] => ([{
     id: 1,
     groupId: 1,
     groupName: 'Group 1',
@@ -80,23 +83,23 @@
   const selectedAsyncText1 = ref()
   const selectedAsyncObject2 = ref<ObjectOption2[]>([])
 
-  const changeOptionsText = () => {
+  const changeOptionsText = (): void => {
     optionText.value = optionText.value.length === getOptionsText().length
       ? optionText.value.slice(2)
       : getOptionsText()
   }
 
-  const changeOptionsObject = () => {
+  const changeOptionsObject = (): void => {
     optionsObject.value = optionsObject.value.length === getOptionsObject().length
       ? optionsObject.value.slice(2)
       : getOptionsObject()
   }
 
-  const reverseText = (text: string) => {
+  const reverseText = (text: string): string => {
     return text ? text.split('').reverse().join('') : ''
   }
 
-  const reverseTextFromObject = (item: ObjectOption) => {
+  const reverseTextFromObject = (item: ObjectOption): string => {
     return item ? reverseText(item.textField + (item.someField ? ' (' + item.someField + ')' : '')) : ''
   }
 

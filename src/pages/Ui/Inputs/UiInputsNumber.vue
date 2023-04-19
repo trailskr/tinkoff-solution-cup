@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { v } from 'src/utils/Validation'
+  import { v } from '@/utils/Validation'
 
   const disabled = ref(false)
 

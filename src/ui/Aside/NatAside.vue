@@ -9,13 +9,13 @@
   const isAnimationInProgress = ref(false) // should turned on - first, off - last
   const animationTrigger = ref(false) // should turned on - last, off - first
 
-  const close = () => {
+  const close = (): void => {
     if (!isOpen) return
     isOpen = false
     animationTrigger.value = false
   }
 
-  const open = () => {
+  const open = (): void => {
     if (isOpen) return
     isOpen = true
     isAnimationInProgress.value = true
@@ -24,7 +24,7 @@
     })
   }
 
-  const onAnimationFinish = () => {
+  const onAnimationFinish = (): void => {
     if (!isAnimationInProgress.value) return
     isAnimationInProgress.value = false
   }

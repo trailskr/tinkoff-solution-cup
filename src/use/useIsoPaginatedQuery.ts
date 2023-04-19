@@ -2,8 +2,8 @@ import type { QueryKey } from 'react-query/types/core'
 import { Ref, UnwrapNestedRefs } from 'vue'
 import { UseQueryOptions, UseQueryReturnType } from 'vue-query'
 
-import { PagedList } from 'src/api/apiTypes'
-import { Pager } from 'src/ui/Pagination/Pager'
+import { PagedList } from '@/api/tmpTypes'
+import { Pager } from '@/ui/Pagination/Pager'
 
 import { IsoQueryFnParams, useIsoQuery } from './useIsoQuery'
 
@@ -12,7 +12,7 @@ export interface PagedQueryParams {
   limit?: number | null
 }
 
-export type PagedQueryFnData<T, K extends string> = PagedList & {[key in K]: T[]}
+export type PagedQueryFnData<T, K extends string> = PagedList<T> & {[key in K]: T[]}
 
 export type UseIsoPaginatedQueryOptions<TListItem, PageQueryDataKey extends string, TQueryFnData extends PagedQueryFnData<TListItem, PageQueryDataKey> = PagedQueryFnData<TListItem, PageQueryDataKey>, TError = unknown, TData extends PagedQueryFnData<TListItem, PageQueryDataKey> = TQueryFnData, TQueryKey extends QueryKey = QueryKey> = Omit<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey' | 'queryFn'> & { infinite?: boolean }
 

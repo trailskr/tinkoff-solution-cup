@@ -5,8 +5,8 @@
     KeyGetter,
     TextGetter,
     SelectedIndices, IconGetter
-  } from 'src/ui/Forms/Inputs/Select/inputSelect'
-  import { Group } from 'src/utils/utils'
+  } from '@/ui/Forms/Inputs/Select/inputSelect'
+  import { Group } from '@/utils/utils'
 
   interface Props {
     query: string
@@ -39,7 +39,7 @@
 
   const { t } = useI18n()
 
-  const selectIndex = (optionIndex: SelectedIndices) => {
+  const selectIndex = (optionIndex: SelectedIndices): void => {
     props.setCursorIndex(optionIndex)
     props.select()
   }

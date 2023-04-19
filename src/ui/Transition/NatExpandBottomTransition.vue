@@ -8,7 +8,7 @@
 
   let contentHeight = 0
 
-  const onBeforeEnter = (el: HTMLElement) => {
+  const onBeforeEnter = (el: HTMLElement): void => {
     const position = el.style.position
     const opacity = el.style.opacity
     el.style.position = 'fixed'
@@ -21,26 +21,26 @@
     el.style.height = '0'
   }
 
-  const onEnter = (el: HTMLElement) => {
+  const onEnter = (el: HTMLElement): void => {
     requestAnimationFrame(() => {
       el.style.height = `${contentHeight}px`
     })
   }
 
-  const onBeforeLeave = (el: HTMLElement) => {
+  const onBeforeLeave = (el: HTMLElement): void => {
     el.style.height = `${el.clientHeight}px`
   }
 
-  const onLeave = (el: HTMLElement) => {
+  const onLeave = (el: HTMLElement): void => {
     el.style.height = '0'
   }
 
-  const onAfterEnter = (el: HTMLElement) => {
+  const onAfterEnter = (el: HTMLElement): void => {
     el.style.height = ''
     emit('afterEnter')
   }
 
-  const onAfterLeave = (el: HTMLElement) => {
+  const onAfterLeave = (el: HTMLElement): void => {
     el.style.height = ''
     emit('afterLeave')
   }

@@ -1,7 +1,7 @@
-import { createParentChild } from 'src/use/useParentChild'
+import { createParentChild } from '@/use/useParentChild'
 
 let expansionId = 0
-export const getExpansionId = () => expansionId++
+export const getExpansionId = (): number => expansionId++
 
 export interface Expansion {
   id: number

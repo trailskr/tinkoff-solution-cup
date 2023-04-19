@@ -21,7 +21,12 @@
     "types": [
       "vite/client",
       "unplugin-icons/types/vue3"
-    ]
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
   "exclude": [
     "dist",

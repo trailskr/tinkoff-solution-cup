@@ -25,7 +25,7 @@ Modifications copyright 2019 1C.
 Original: https://github.com/andreypopp/react-textarea-autosize
 */
 
-import { isNumber } from 'src/utils/typecheck'
+import { isNumber } from '@/utils/typecheck'
 
 const HIDDEN_TEXTAREA_STYLE = {
   'min-height': '0',
@@ -44,7 +44,7 @@ const CONTENT_BOX = 'content-box'
 
 const hiddenTextarea = document.createElement('textarea')
 
-const forceHiddenStyles = (node: HTMLTextAreaElement) => {
+const forceHiddenStyles = (node: HTMLTextAreaElement): void => {
   (Object.keys(HIDDEN_TEXTAREA_STYLE) as (keyof typeof HIDDEN_TEXTAREA_STYLE)[]).forEach(
     (key) => {
       node.style.setProperty(key, HIDDEN_TEXTAREA_STYLE[key], 'important')
