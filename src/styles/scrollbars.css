@@ -1,0 +1,20 @@
+::-webkit-scrollbar {
+  @apply w-4;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-mainbg;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-4 border-6 border-mainbg;
+}
+
+/* bg-specific */
+.bg-mainbg::-webkit-scrollbar-track {
+  @apply bg-mainbg;
+}
+
+.bg-mainbg::-webkit-scrollbar-thumb {
+  @apply border-mainbg;
+}

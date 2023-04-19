@@ -1,17 +1,19 @@
 import {
   defineConfig,
   presetUno,
-  presetWebFonts
+  presetWebFonts,
+  transformerDirectives,
+  transformerVariantGroup
 } from 'unocss'
 
-import { screenBreakpoints } from './screenBreakpoints'
+import { screenBreakpoints } from './src/screenBreakpoints'
+import { themeColors } from './src/themeColors'
 import { parentNamedGroupStatusModifier } from './unocss-named-group-status'
 
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
   theme: {
-    colors: {
-    },
+    colors: themeColors,
     boxShadow: {
     },
     screens: Object.entries(screenBreakpoints).reduce((res, [name, size]) => ({ ...res, [name]: { min: `${size}px` } }), {})
@@ -20,7 +22,8 @@ export default defineConfig({
     parentNamedGroupStatusModifier
   ],
   shortcuts: {
-    // 'text-theme': 'text-black',
+    'text-theme': 'text-main dark:text-maind',
+    'bg-theme': 'bg-mainbg dark:bg-mainbgd'
   },
   presets: [
     presetUno(),
@@ -29,5 +32,9 @@ export default defineConfig({
         sans: 'Roboto'
       }
     })
+  ],
+  transformers: [
+    transformerDirectives(),
+    transformerVariantGroup()
   ]
 })
