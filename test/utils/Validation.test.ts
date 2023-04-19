@@ -394,7 +394,7 @@ describe('Validation', () => {
       }]
     }
 
-    const getAllValues = (): void => {
+    const getAllValues = (): {id: number}[] => {
       const values: {id: number}[] = []
       data.arr1.forEach((item) => {
         item.arr2.forEach((element) => {
