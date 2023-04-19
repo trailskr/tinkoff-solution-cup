@@ -1,42 +1,48 @@
-# Nuxt 3 Minimal Starter
+# Ivan Agafonov Sample Frontend project with SSR
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+SSR is turned off and not tested for a long time
 
-## Setup
+Application using https://dummyjson.com/ as mock api
 
-Make sure to install the dependencies:
+## Usage
 
-```bash
-# yarn
-yarn install
+### Environment
 
-# npm
-npm install
+To set environment use env variables or .env files.
+You can edit main example .env file or create .env.local excluded from repository.
+You can add mode (developent and production) to env file like .env.production or .env.development.local
 
-# pnpm
-pnpm install
-```
+### Development
 
-## Development Server
-
-Start the development server on `http://localhost:3000`
+To update api definishion and typings run
 
 ```bash
-npm run dev
+pnpm api
 ```
 
-## Production
-
-Build the application for production:
+To run local development just run and visit http://localhost:3333
 
 ```bash
-npm run build
+pnpm dev
 ```
 
-Locally preview production build:
+### Build
+
+To build the App, run
 
 ```bash
-npm run preview
+pnpm build
+```
+And you will see the generated file in `dist` that ready to be served.
+
+TypeScript is not checked during build. To do this run
+
+```bash
+pnpm typecheck
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+To run linter
+
+```bash
+pnpm lint
+```
