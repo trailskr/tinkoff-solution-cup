@@ -1,8 +1,4 @@
-# Ivan Agafonov Sample Frontend project with SSR
-
-SSR is turned off and not tested for a long time
-
-Application using https://dummyjson.com/ as mock api
+# Ivan Agafonov's "Tinkoff Solution Cup" Final Frontend Solution
 
 ## Usage
 
