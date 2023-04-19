@@ -24,7 +24,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@/': `${resolve(__dirname, 'src')}/`,
+      'src/': `${resolve(__dirname, 'src')}/`,
       'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js'
     }
   },
@@ -45,6 +45,8 @@ export default defineConfig({
         'vue',
         'vue-router',
         'vue-i18n',
+        '@vueuse/head',
+        '@vueuse/core',
         {
           '@vueuse/router': [
             'useRouteQuery'
@@ -100,10 +102,21 @@ export default defineConfig({
   optimizeDeps: {
     include: [
       'vue',
-      'vue-router'
+      'vue-router',
+      '@vueuse/core',
+      '@vueuse/head'
     ],
     exclude: [
       'vue-demi'
     ]
+  },
+
+  // https://github.com/vitest-dev/vitest
+  test: {
+    include: ['test/**/*.test.ts'],
+    environment: 'jsdom',
+    deps: {
+      inline: ['@vue', '@vueuse', 'vue-demi']
+    }
   }
 })

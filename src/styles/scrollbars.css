@@ -11,16 +11,10 @@
 }
 
 /* bg-specific */
-.bg-substrate::-webkit-scrollbar-track {
-  @apply bg-substrate;
-}
-.bg-substrate::-webkit-scrollbar-thumb {
-  @apply border-substrate;
-}
-
 .bg-white::-webkit-scrollbar-track {
   @apply bg-white;
 }
+
 .bg-white::-webkit-scrollbar-thumb {
   @apply border-white;
 }
@@ -28,6 +22,7 @@
 .bg-theme::-webkit-scrollbar-track {
   @apply bg-theme;
 }
+
 .bg-theme::-webkit-scrollbar-thumb {
   @apply border-theme;
 }

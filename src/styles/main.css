@@ -15,11 +15,11 @@ body,
 }
 
 html {
-  @apply bg-background text-main;
+  @apply bg-mainbg text-main;
 }
 
 html.dark {
-  @apply bg-main text-main-dark;
+  @apply bg-mainbgd text-maind;
 }
 
 #nprogress {
@@ -27,7 +27,7 @@ html.dark {
 }
 
 #nprogress .bar {
-  @apply bg-accent;
+  @apply bg-primary;
   opacity: 0.75;
   position: fixed;
   z-index: 1031;

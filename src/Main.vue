@@ -1,3 +1,5 @@
 <template>
-  Main.vue
+  <NatNotifications>
+    <RouterView />
+  </NatNotifications>
 </template>
