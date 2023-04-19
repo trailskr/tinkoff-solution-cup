@@ -16,7 +16,13 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, process.env.VITE_BUILD_SIGNING ? 'signing/index.html' : 'index.html')
-      }
+      },
+      external: [
+        '@iconify/utils/lib/loader/fs',
+        '@iconify/utils/lib/loader/install-pkg',
+        '@iconify/utils/lib/loader/node-loader',
+        '@iconify/utils/lib/loader/node-loaders'
+      ]
     }
   },
   server: {
@@ -107,7 +113,11 @@ export default defineConfig({
       '@vueuse/head'
     ],
     exclude: [
-      'vue-demi'
+      'vue-demi',
+      '@iconify/utils/lib/loader/fs',
+      '@iconify/utils/lib/loader/install-pkg',
+      '@iconify/utils/lib/loader/node-loader',
+      '@iconify/utils/lib/loader/node-loaders'
     ]
   },
 
